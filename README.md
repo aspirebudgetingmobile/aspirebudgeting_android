@@ -1,4 +1,7 @@
 # aspirebudgeting_android
+
+[![codecov](https://codecov.io/gh/aspirebudgetingmobile/aspirebudgeting_android/branch/master/graph/badge.svg)](https://codecov.io/gh/aspirebudgetingmobile/aspirebudgeting_android)
+
 # What is Aspire Budgeting?
 This is explained best by [u/Sapphire_Rapids](https://www.reddit.com/user/Sapphire_Rapids/), the creator of the Aspire Budgeting Google Sheet on his website [AspireBudget.com](https://aspirebudget.com/)
 > Aspire is an envelope-style budgeting spreadsheet. Its primary goal is to give you the power and ability to be proactive with your finances - all in a delightfully designed Google Sheet. With Aspire, you can see your budget with just a glance, quickly add transactions as you make them, and run reports to get new insights on your spending.
