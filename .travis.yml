@@ -1,6 +1,5 @@
 language: android
 dist: trusty
-sudo: false
 android:
   components:
     # Uncomment the lines below if you want to
@@ -18,24 +17,24 @@ android:
     - extra-google-google_play_services
     - extra-google-m2repository
     - extra-android-m2repository
-    licenses:
-      - 'android-sdk-preview-license-52d11cd2'
-      - 'android-sdk-license-.+'
-      - 'google-gdk-license-.+'
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
 
-      # Specify at least one system image,
-      # if you need to run emulator(s) during your tests
-      - sys-img-x86-android-28
+    # Specify at least one system image,
+    # if you need to run emulator(s) during your tests
+    - sys-img-x86-android-28
 #    - sys-img-armeabi-v7a-android-17
-    before_script:
-      - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
-      - emulator -avd test -no-skin -no-audio -no-window &
-      - android-wait-for-emulator
-      - adb shell input keyevent 82 &
+before_script:
+  - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
 
-    script:
-      - android list target
-      - ./gradlew connectedAndroidTest
+script:
+  - android list target
+  - ./gradlew connectedAndroidTest
 
-    after_success:
-        - bash <(curl -s https://codecov.io/bash)
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
