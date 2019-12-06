@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+/secret
+/app/debug
+/app/release
