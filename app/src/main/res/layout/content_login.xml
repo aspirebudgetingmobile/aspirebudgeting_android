@@ -33,6 +33,7 @@
             android:id="@+id/login_divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_margin="16dp"
             android:layout_below="@id/login_aspire_title"
             android:background="@android:color/darker_gray" />
 
@@ -41,6 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/login_divider"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:text="Link your Google Account"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -49,9 +51,11 @@
         <TextView
             android:id="@+id/login_aspire_link_info_text"
             android:layout_width="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/login_aspire_link_text"
             android:layout_centerHorizontal="true"
+            android:gravity="center"
             android:text="Aspire Budgeting requires you to either link your existing budget sheet or create a new budget sheet in Google Drive"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             android:textColor="@android:color/white" />
@@ -68,8 +72,8 @@
             android:id="@+id/youtube_player_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="32dp"
             app:autoPlay="false"
-            android:layout_margin="16dp"
             app:enableAutomaticInitialization="true"
             app:showFullScreenButton="true"
             app:videoId="RBf9YBBDgbs" />
@@ -77,10 +81,14 @@
 
     <Button
         android:id="@+id/sign_in_button"
-        android:text="Sign In"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:background="@drawable/circle"
+        android:text="Connect To Google Account"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/white" />
 </RelativeLayout>
