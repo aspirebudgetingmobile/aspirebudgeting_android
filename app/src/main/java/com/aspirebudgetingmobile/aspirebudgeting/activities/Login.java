@@ -11,8 +11,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
-import com.aspirebudgetingmobile.aspirebudgeting.utils.UserManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.card.MaterialCardView;
 
 public class Login extends AppCompatActivity {
@@ -22,8 +27,9 @@ public class Login extends AppCompatActivity {
     RelativeLayout googleRelativeLayout;
     MaterialCardView googleLoginCard_login;
 
-    UserManager userManager;
-    int GOOGLE_SIGN_IN = 0;
+    private static final int GOOGLE_SIGN_IN = 10;
+    GoogleSignInOptions gso;
+    GoogleSignInClient mGoogleSignInClient;
 
 
     @Override
@@ -36,9 +42,12 @@ public class Login extends AppCompatActivity {
             getWindow().setNavigationBarColor(ContextCompat.getColor(Login.this, android.R.color.white));
         }
 
-        // CREATE AN OBJECT OF USER_MANAGER AND INITIALIZE GOOGLE SIGN IN
-        userManager = new UserManager(Login.this, Login.this);
-        userManager.initializeGoogleSignIn();
+        //SETTING UP GOOGLE SIGN IN OPTIONS AND CLIENT WITH DRIVE AND SHEETS SCOPE
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .requestScopes(new Scope("https://www.googleapis.com/auth/drive.file"), new Scope("https://www.googleapis.com/auth/spreadsheets"))
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // FETCHING IDs OF ALL ELEMENTS USED
         googleRelativeLayout = findViewById(R.id.googleLoginRelativeLayout_login);
@@ -46,7 +55,14 @@ public class Login extends AppCompatActivity {
 
         // TRIGGER ON CLICK LISTENERS FOR ALL ELEMENTS
         onClickListeners();
+    }
 
+    /**
+     * METHOD TO TRIGGER GOOGLE LOGIN DIALOG
+     */
+    public void googleLogin() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, GOOGLE_SIGN_IN);
     }
 
     @Override
@@ -54,19 +70,21 @@ public class Login extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GOOGLE_SIGN_IN) {
             if (resultCode == RESULT_OK) {
-                // GOOGLE LOGIN SUCCESSFUL AND GIVE USER_MANAGER DATA
-                userManager.setSignedInAccount(GoogleSignIn.getSignedInAccountFromIntent(data));
-                handleSignInResult();
+                // GOOGLE LOGIN SUCCESSFUL
+                Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+                handleSignInResult(task);
             } else {
-                // IF USER CANCELS OR STOPS THE GOOGLE LOGIN PROCESS MIDWAY
                 Log.e(TAG, "onActivityResult: GOOGLE LOGIN FAILED");
             }
         }
     }
 
-    private void handleSignInResult() {
+    private void handleSignInResult(Task<GoogleSignInAccount> task) {
         try {
-            Toast.makeText(this, "Hello, " + userManager.getName(), Toast.LENGTH_SHORT).show();
+            GoogleSignInAccount account = task.getResult(ApiException.class);
+            if (account != null) {
+                Toast.makeText(this, "Hello, " + account.getDisplayName(), Toast.LENGTH_SHORT).show();
+            }
             startActivity(new Intent(Login.this, Dashboard.class));
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,7 +96,7 @@ public class Login extends AppCompatActivity {
         googleRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GOOGLE_SIGN_IN = userManager.startGoogleLogin();
+                googleLogin();
             }
         });
     }
