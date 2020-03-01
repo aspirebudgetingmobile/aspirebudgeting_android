@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">aspirebudgeting</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Aspire</string>
+
+    <string name="GOOGLE_CLIEND_ID">986830921910-r49kvh077ecbugterud2i0m0hati2e3v.apps.googleusercontent.com</string>
 </resources>
