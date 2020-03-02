@@ -19,3 +19,5 @@ android:
     - addon-google_apis-google-$ANDROID_API_LEVEL
 script:
     - ./gradlew build check
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
