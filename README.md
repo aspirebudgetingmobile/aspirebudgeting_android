@@ -1,5 +1,5 @@
 # aspirebudgeting_android
-[![Build Status](https://travis-ci.com/aspirebudgetingmobile/aspirebudgeting_android.svg?branch=master)](https://travis-ci.com/aspirebudgetingmobile/aspirebudgeting_android)
+[![Build Status](https://travis-ci.org/akashsarkar188/aspirebudgeting_android.svg?branch=master)](https://travis-ci.com/aspirebudgetingmobile/aspirebudgeting_android)
 
 [![codecov](https://codecov.io/gh/aspirebudgetingmobile/aspirebudgeting_android/branch/master/graph/badge.svg)](https://codecov.io/gh/aspirebudgetingmobile/aspirebudgeting_android)
 
