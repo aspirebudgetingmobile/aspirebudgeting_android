@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">aspirebudgeting</string>
-    <string name="title_activity_login">LoginActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Aspire</string>
+
 </resources>
