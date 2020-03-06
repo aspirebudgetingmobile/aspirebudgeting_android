@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
+import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 
 public class Splash extends AppCompatActivity {
+
+    ObjectFactory objectFactory = ObjectFactory.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +25,24 @@ public class Splash extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(Splash.this, Login.class));
-                finish();
-            }
-        }, 1500);
-
+        if (objectFactory.getUserManager().getLastAccount(Splash.this) != null) {
+            // USER HAS ALREADY SIGNED IN
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(Splash.this, SheetsList.class));
+                    finish();
+                }
+            }, 1500);
+        } else {
+            // NEW USER OR SESSION EXPIRED
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(Splash.this, Login.class));
+                    finish();
+                }
+            }, 1500);
+        }
     }
 }

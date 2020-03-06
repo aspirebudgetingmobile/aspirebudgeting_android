@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
-import com.aspirebudgetingmobile.aspirebudgeting.utils.UserManager;
+import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.material.card.MaterialCardView;
 
@@ -22,9 +22,8 @@ public class Login extends AppCompatActivity {
     RelativeLayout googleRelativeLayout;
     MaterialCardView googleLoginCard_login;
 
-    UserManager userManager;
+    ObjectFactory objectFactory = ObjectFactory.getInstance();
     int GOOGLE_SIGN_IN = 0;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +36,7 @@ public class Login extends AppCompatActivity {
         }
 
         // CREATE AN OBJECT OF USER_MANAGER AND INITIALIZE GOOGLE SIGN IN
-        userManager = new UserManager(Login.this, Login.this);
-        userManager.initializeGoogleSignIn();
+        objectFactory.getUserManager().initializeGoogleSignIn(Login.this);
 
         // FETCHING IDs OF ALL ELEMENTS USED
         googleRelativeLayout = findViewById(R.id.googleLoginRelativeLayout_login);
@@ -46,7 +44,6 @@ public class Login extends AppCompatActivity {
 
         // TRIGGER ON CLICK LISTENERS FOR ALL ELEMENTS
         onClickListeners();
-
     }
 
     @Override
@@ -55,7 +52,7 @@ public class Login extends AppCompatActivity {
         if (requestCode == GOOGLE_SIGN_IN) {
             if (resultCode == RESULT_OK) {
                 // GOOGLE LOGIN SUCCESSFUL AND GIVE USER_MANAGER DATA
-                userManager.setSignedInAccount(GoogleSignIn.getSignedInAccountFromIntent(data));
+                objectFactory.getUserManager().setSignedInAccount(GoogleSignIn.getSignedInAccountFromIntent(data), Login.this);
                 handleSignInResult();
             } else {
                 // IF USER CANCELS OR STOPS THE GOOGLE LOGIN PROCESS MIDWAY
@@ -66,8 +63,8 @@ public class Login extends AppCompatActivity {
 
     private void handleSignInResult() {
         try {
-            Toast.makeText(this, "Hello, " + userManager.getName(), Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(Login.this, Dashboard.class));
+            Toast.makeText(this, "Hello, " + objectFactory.getUserManager().getName(), Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(Login.this, SheetsList.class));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -78,7 +75,7 @@ public class Login extends AppCompatActivity {
         googleRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GOOGLE_SIGN_IN = userManager.startGoogleLogin();
+                GOOGLE_SIGN_IN = objectFactory.getUserManager().startGoogleLogin(Login.this);
             }
         });
     }
