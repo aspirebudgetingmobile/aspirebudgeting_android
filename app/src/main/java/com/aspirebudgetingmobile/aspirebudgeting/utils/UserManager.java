@@ -28,7 +28,6 @@ import java.util.Objects;
 
 public class UserManager {
 
-    private ObjectFactory objectFactory = ObjectFactory.getInstance();
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private Task<GoogleSignInAccount> task;
@@ -41,7 +40,7 @@ public class UserManager {
     private static final int GOOGLE_SIGN_IN = 10;
     private static final String TAG = "USER_MANAGER";
 
-    private SessionConfig sessionConfig;
+    SessionConfig sessionConfig;
 
     public UserManager() {
     }
@@ -49,7 +48,7 @@ public class UserManager {
     public void initializeGoogleSignIn(Context context) {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestScopes(new Scope("https://www.googleapis.com/auth/spreadsheets"), new Scope("https://www.googleapis.com/auth/drive"))
+                .requestScopes(new Scope("https://www.googleapis.com/auth/drive.file"), new Scope("https://www.googleapis.com/auth/spreadsheets"))
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
     }
@@ -67,11 +66,11 @@ public class UserManager {
             account = task.getResult();
             if (account != null) {
                 // SET ALL THE DATA IN LOCAL SHARED PREFERENCE SO THAT WE CAN ACCESS IT ACROSS APPLICATION
-                sessionConfig = objectFactory.getSessionConfig();
+                sessionConfig = new SessionConfig(context);
                 sessionConfig.setEmail(account.getEmail());
                 sessionConfig.setName(account.getDisplayName());
                 sessionConfig.setProfilePic(Objects.requireNonNull(account.getPhotoUrl()).toString());
-                sessionConfig.setLoginStatus(true);
+                sessionConfig.setloginStatus(true);
             }
         }
     }
@@ -85,7 +84,6 @@ public class UserManager {
 
     }
 
-    // FOR FUTURE USE TO SHOW DATA IN SETTINGS OR SIDE DRAWER
     public String getName() {
         if (account == null) {
             return "null";
@@ -94,7 +92,6 @@ public class UserManager {
         }
     }
 
-    // FOR FUTURE USE TO SHOW DATA IN SETTINGS OR SIDE DRAWER
     public String getEmail() {
         if (account == null) {
             return "null";
@@ -104,7 +101,6 @@ public class UserManager {
 
     }
 
-    // FOR FUTURE USE TO SHOW DATA IN SETTINGS OR SIDE DRAWER
     public String getProfilePic() {
         if (account == null) {
             return "null";
@@ -148,10 +144,9 @@ public class UserManager {
         }
         try {
             request = driveService.files().list()
-                    .setPageSize(20)
+                    .setPageSize(10)
                     .setQ("mimeType = 'application/vnd.google-apps.spreadsheet'")
-                    //.setFields("nextPageToken, files(id, name)");
-                    .setFields("kind,nextPageToken,files(mimeType,id,kind,name)");
+                    .setFields("nextPageToken, files(id, name)");
 
 
             FileList result = request.execute();
