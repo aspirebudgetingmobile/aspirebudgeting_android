@@ -19,6 +19,9 @@ android {
         debug {
             testCoverageEnabled true
         }
+        lintOptions {
+            abortOnError false
+        }
     }
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
