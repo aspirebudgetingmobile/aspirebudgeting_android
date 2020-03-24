@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@color/dashboardCardColor"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:layout_marginStart="10dp"
+        android:drawablePadding="5dp"
+        android:text="AmEx"
+        android:drawableStart="@drawable/wallet_icon"
+        android:textColor="#fff"
+        android:fontFamily="@font/open_sans"
+        android:id="@+id/categoryName_expandedCategory" />
+
+
+    <LinearLayout
+        android:id="@+id/amountSummaryLayout_expandedCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:layout_below="@id/categoryName_expandedCategory">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:gravity="center_horizontal"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/budgetedBalanceLayout_expandedCard"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="20sp"
+                android:textColor="#BF9938"
+                android:fontFamily="@font/open_sans_bold"
+                android:id="@+id/budgetedBalanceText_expandedCard" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Budgeted"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:id="@+id/budgetedText" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:gravity="center_horizontal"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/availableBalanceLayout_expandedCard"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="20sp"
+                android:textColor="#3AC28F"
+                android:fontFamily="@font/open_sans_bold"
+                android:id="@+id/availableBalanceText_expandedCard" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:id="@+id/availableText" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:gravity="center_horizontal"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/spentBalanceLayout_expandedCard"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="20sp"
+                android:textColor="#CE7976"
+                android:fontFamily="@font/open_sans_bold"
+                android:id="@+id/spentBalanceText_expandedCard" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spent"
+                android:textColor="#fff"
+                android:textSize="14sp"
+                android:id="@+id/spentText" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

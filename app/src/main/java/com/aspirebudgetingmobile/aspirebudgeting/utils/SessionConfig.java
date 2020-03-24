@@ -12,6 +12,7 @@ public class SessionConfig {
     private static final String SharedPref_email = "com.aspirebudgetingmobile.aspirebudgeting_email";
     private static final String SharedPref_name = "com.aspirebudgetingmobile.aspirebudgeting_name";
     private static final String SharedPref_profile = "com.aspirebudgetingmobile.aspirebudgeting_profile";
+    private static final String SharedPref_sheetId = "com.aspirebudgetingmobile.aspirebudgeting_sheetId";
 
     public SessionConfig(Context context) {
         this.context = context;
@@ -56,6 +57,16 @@ public class SessionConfig {
 
     public String getProfilePic() {
         return sharedPreferences.getString(SharedPref_profile, "none");
+    }
+
+    public void setSheetId(String SheetId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SharedPref_sheetId, SheetId);
+        editor.apply();
+    }
+
+    public String getSheetId() {
+        return sharedPreferences.getString(SharedPref_sheetId, "none");
     }
 
 }

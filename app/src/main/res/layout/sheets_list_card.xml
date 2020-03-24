@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_margin="5dp"
         app:strokeColor="#E7E7E7"
+        android:id="@+id/sheetsNameCard"
         app:strokeWidth="1dp"
         app:cardCornerRadius="6dp"
         android:layout_height="wrap_content">
@@ -29,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="Aspire Sheet v1"
                 android:textColor="#000"
+                android:layout_toStartOf="@id/rightArrow"
                 android:layout_centerVertical="true"
                 android:textSize="18sp"
                 android:layout_marginStart="10dp"

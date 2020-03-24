@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/aspireDarkPrimaryColor"
+    android:orientation="vertical"
+    tools:context=".fragments.Transaction">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_background"
+        android:padding="10dp"
+        android:hint="Enter Amount"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:drawableStart="@drawable/dollar_icon"
+        android:textColorHint="#353746"
+        android:id="@+id/amountEditText_transactions" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_background"
+        android:padding="10dp"
+        android:hint="Add Memo"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:drawableStart="@drawable/wallet_icon"
+        android:drawableTint="@color/aspireDarkPrimaryColor"
+        android:textColorHint="@color/aspireDarkPrimaryColor"
+        android:id="@+id/addMemoEditText_transactions" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_background"
+        android:padding="10dp"
+        android:hint="Select Date"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:drawableStart="@drawable/dollar_icon"
+        android:textColorHint="#353746"
+        android:id="@+id/selectDateEditText_transactions" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_background"
+        android:padding="10dp"
+        android:hint="Select Category"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:drawableStart="@drawable/wallet_icon"
+        android:drawableTint="@color/aspireDarkPrimaryColor"
+        android:textColorHint="#353746"
+        android:id="@+id/selectCategoryEditText_transactions" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/grey_background"
+        android:padding="10dp"
+        android:hint="Select Amount"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:drawablePadding="10dp"
+        android:gravity="center"
+        android:drawableStart="@drawable/dollar_icon"
+        android:textColorHint="#353746"
+        android:id="@+id/selectAmountEditText_transactions" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Actions not added yet."
+        android:textColor="#fff"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

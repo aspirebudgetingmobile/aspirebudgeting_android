@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".activities.SheetsList"/>
-        <activity android:name=".activities.Dashboard" />
+        <activity android:name=".activities.Home" />
         <activity android:name=".activities.Login" />
         <activity android:name=".activities.Splash">
             <intent-filter>

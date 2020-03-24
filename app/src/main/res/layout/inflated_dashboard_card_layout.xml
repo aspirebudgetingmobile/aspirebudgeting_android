@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:layout_margin="25dp"
+    android:animateLayoutChanges="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/collapsedCardView"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        app:cardElevation="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/dashboardCardColor"
+        app:cardCornerRadius="10dp">
+        <RelativeLayout
+            android:background="@color/dashboardCardColor"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Credit Card Payments"
+                android:layout_toStartOf="@id/availableBalanceLayout"
+                android:textColor="#fff"
+                android:fontFamily="@font/open_sans"
+                android:id="@+id/cardHeaderText_collapsedCard"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|top"
+                android:layout_above="@id/viewCategory_collapsedCard"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/availableBalanceLayout"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="30sp"
+                    android:textColor="#3AC28F"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:id="@+id/availableBalanceText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:id="@+id/availableText"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="5dp"
+                android:layout_below="@+id/cardHeaderText_collapsedCard"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/spentBalanceLayout"
+                android:layout_alignParentStart="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Spent"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:id="@+id/spentText"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="20sp"
+                    android:textColor="#CE7976"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:id="@+id/spentBalanceText"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/spentBalanceLayout"
+                android:text="View 4 categories"
+                android:textSize="15sp"
+                android:fontFamily="@font/open_sans"
+                android:textColor="#A2A2A2"
+                android:textAlignment="center"
+                android:id="@+id/viewCategory_collapsedCard"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <include layout="@layout/expanded_dashboard_card"
+        android:visibility="gone"/>
+</RelativeLayout>
