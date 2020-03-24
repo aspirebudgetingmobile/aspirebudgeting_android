@@ -4,8 +4,11 @@
     <color name="colorPrimaryDark">#353748</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="aspireDarkPrimaryColor">#353746</color>
+
     <!--    Login page colors-->
     <color name="aspire_blue">#5FB2EB</color>
 
-
+    <!-- Dashboard -->
+    <color name="dashboardCardColor">#424453</color>
 </resources>
