@@ -1,6 +1,8 @@
 package com.aspirebudgetingmobile.aspirebudgeting.activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,8 @@ import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.adapters.SheetsListAdapter;
 import com.aspirebudgetingmobile.aspirebudgeting.models.SheetsListModel;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
+import com.aspirebudgetingmobile.aspirebudgeting.utils.SessionConfig;
+import com.aspirebudgetingmobile.aspirebudgeting.utils.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +26,14 @@ public class SheetsList extends AppCompatActivity {
     private static final String TAG = "SHEETS_LIST";
 
     ObjectFactory objectFactory = ObjectFactory.getInstance();
+    UserManager userManager;
+    SessionConfig sessionConfig;
 
     RecyclerView sheetsListRecyclerView_LinkSheets;
     List<SheetsListModel> list = new ArrayList<>();
     SheetsListAdapter adapter;
+
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +44,29 @@ public class SheetsList extends AppCompatActivity {
         sheetsListRecyclerView_LinkSheets = findViewById(R.id.sheetsListRecyclerView_LinkSheets);
         sheetsListRecyclerView_LinkSheets.setLayoutManager(new LinearLayoutManager(SheetsList.this, RecyclerView.VERTICAL, false));
 
-        // GET THE GOOGLE ACCOUNT READY TO FETCH SHEETS
-        objectFactory.getUserManager().getLastAccount(SheetsList.this);
-        objectFactory.getUserManager().initCredential(SheetsList.this);
-        objectFactory.getUserManager().initDriveService();
+        // INITIALIZE USER MANAGER AND SESSION CONFIG
+        userManager = objectFactory.getUserManager();
+        sessionConfig = new SessionConfig(SheetsList.this);
 
-        // START AN ASYNC TASK TO GET THE LIST
-        getSheetsList();
+        // IF USER HAS SELECTED THE SHEET BEFORE, SKIP THIS SCREEN
+        if (!sessionConfig.getSheetId().equals("none")){
+            startActivity(new Intent(SheetsList.this, Home.class));
+            finish();
+        } else {
 
+            // GET THE GOOGLE ACCOUNT READY TO FETCH SHEETS
+            userManager.getLastAccount(SheetsList.this);
+            userManager.initCredential(SheetsList.this);
+            userManager.initDriveService();
 
+            // INITIALIZE PROGRESS DIALOG
+            progressDialog = new ProgressDialog(SheetsList.this);
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+
+            // START AN ASYNC TASK TO GET THE LIST
+            getSheetsList();
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -57,7 +79,7 @@ public class SheetsList extends AppCompatActivity {
                 if (list.size() > 0) {
                     list.clear();
                 }
-                list = objectFactory.getUserManager().getFiles();
+                list = userManager.getFiles();
                 Log.e(TAG, "onCreate: " + list);
                 return null;
             }
@@ -67,6 +89,10 @@ public class SheetsList extends AppCompatActivity {
                 super.onPostExecute(aVoid);
                 // TASK TO DO AFTER GETTING THE LIST
                 showList();
+
+                // DISMISS PROGRESS DIALOG
+                if(progressDialog.isShowing())
+                    progressDialog.dismiss();
             }
         }.execute();
 

@@ -6,23 +6,29 @@ public class ObjectFactory {
 
     private static UserManager userManager;
 
+    private static SheetsManager sheetsManager;
+
     private ObjectFactory() {
     }
 
     public static synchronized ObjectFactory getInstance() {
-        if (objectFactory == null){
-            return objectFactory = new ObjectFactory();
-        } else {
-            return objectFactory;
+        if (objectFactory == null) {
+             objectFactory = new ObjectFactory();
         }
+        return objectFactory;
     }
 
-    public UserManager getUserManager(){
-        if (userManager == null){
+    public UserManager getUserManager() {
+        if (userManager == null) {
             userManager = new UserManager();
-            return userManager;
-        } else {
-            return userManager;
         }
+        return userManager;
+    }
+
+    public SheetsManager getSheetsManager() {
+        if (sheetsManager == null) {
+            sheetsManager = new SheetsManager();
+        }
+        return sheetsManager;
     }
 }
