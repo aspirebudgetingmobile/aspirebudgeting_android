@@ -40,9 +40,6 @@ public class Dashboard extends Fragment {
     private ObjectFactory objectFactory = ObjectFactory.getInstance();
     private SessionConfig sessionConfig;
     private String sheetID = "";
-    private List<List<Object>> fetchedData = null;
-    private JSONArray parsedData = new JSONArray();
-    private List<Object> fakeBuffer = new ArrayList<>();
 
     private List<DashboardCardsModel> list = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -71,10 +68,6 @@ public class Dashboard extends Fragment {
 
         recyclerView = view.findViewById(R.id.dashboardCardsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-        adapter = new DashboardCardsAdapter(context, list);
-
-        // CREATED A FAKE LIST ITEM TO INCLUDE THE LAST ITEM IN MAIN DATA
-        fakeBuffer.add("FakeBuffer");
 
         // FETCH CATEGORIES AND GROUPS TO DISPLAY
         getGroupToDisplay();
@@ -89,8 +82,7 @@ public class Dashboard extends Fragment {
             @Override
             protected Void doInBackground(Void... voids) {
 
-                fetchedData = sheetsManager.fetchCategoriesAndGroups(context, sheetID);
-                fetchedData.add(fakeBuffer);
+                list = sheetsManager.fetchCategoriesAndGroups(context, sheetID);
                 return null;
             }
 
@@ -98,68 +90,13 @@ public class Dashboard extends Fragment {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
 
-                parseFetchedData();
+                adapter = new DashboardCardsAdapter(context, list);
+                recyclerView.setAdapter(adapter);
+                loadingLayout.setVisibility(View.GONE);
             }
         }.execute();
     }
 
-    private void parseFetchedData() {
-        try {
-            JSONObject innerObject = null;
-            List<String> categoryName = null;
-            List<String> budgeted = null;
-            List<String> spent = null;
-            List<String> available = null;
-            String name = "";
-
-            for (int i = 0; i < fetchedData.size(); i++) {
-
-                List<Object> test = fetchedData.get(i);
-
-                if (test.size() == 1) {
-
-                    if (innerObject != null) {
-                        innerObject.put("categoryName", categoryName);
-                        innerObject.put("budgeted", budgeted);
-                        innerObject.put("spent", spent);
-                        innerObject.put("available", available);
-
-                        DashboardCardsModel model = new DashboardCardsModel(name,
-                                categoryName,
-                                budgeted,
-                                spent,
-                                available);
-
-                        list.add(model);
-                    }
-
-                    if (innerObject != null)
-                        parsedData.put(innerObject);
-
-                    innerObject = new JSONObject();
-                    categoryName = new ArrayList<>();
-                    budgeted = new ArrayList<>();
-                    spent = new ArrayList<>();
-                    available = new ArrayList<>();
-
-                    name =  test.toString().replace("[", "").replace("]", "");
-                    innerObject.put("name",name);
-
-                } else {
-                    Objects.requireNonNull(categoryName).add(String.valueOf(test.get(0)));
-                    budgeted.add(String.valueOf(test.get(7)));
-                    spent.add(String.valueOf(test.get(4)));
-                    available.add(String.valueOf(test.get(1)));
-
-                }
-            }
-            recyclerView.setAdapter(adapter);
-            loadingLayout.setVisibility(View.GONE);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
 
 
