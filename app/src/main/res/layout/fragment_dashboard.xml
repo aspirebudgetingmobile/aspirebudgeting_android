@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/aspireDarkPrimaryColor"
-    tools:context=".fragments.Dashboard">
+<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/dashboardCardsRecyclerView"/>
+        android:layout_height="match_parent"
+        android:background="@color/aspireDarkPrimaryColor"
+        tools:context=".fragments.Dashboard">
 
-    <LinearLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:orientation="horizontal">
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/dashboardCardsRecyclerView" />
 
-        <ProgressBar
-            android:indeterminateTint="#fff"
-            android:layout_width="20dp"
-            android:layout_height="20dp"/>
-        <TextView
-            android:layout_marginStart="10dp"
-            android:textSize="16sp"
+        <LinearLayout
+            android:id="@+id/loadingLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Loading, please wait..."
-            android:textColor="#fff"/>
-    </LinearLayout>
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
 
-</RelativeLayout>
+            <ProgressBar
+                android:indeterminateTint="#fff"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Loading, please wait..."
+                android:textColor="#fff" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
