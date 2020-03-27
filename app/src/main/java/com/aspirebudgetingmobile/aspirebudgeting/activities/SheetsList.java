@@ -46,7 +46,7 @@ public class SheetsList extends AppCompatActivity {
 
         // INITIALIZE USER MANAGER AND SESSION CONFIG
         userManager = objectFactory.getUserManager();
-        sessionConfig = new SessionConfig(SheetsList.this);
+        sessionConfig = objectFactory.getSessionConfig();
 
         // IF USER HAS SELECTED THE SHEET BEFORE, SKIP THIS SCREEN
         if (!sessionConfig.getSheetId().equals("none")){

@@ -19,13 +19,13 @@ public class SessionConfig {
         sharedPreferences = context.getSharedPreferences(initSharedPref, Context.MODE_PRIVATE);
     }
 
-    public void setloginStatus(boolean status) {
+    public void setLoginStatus(boolean status) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(SharedPref_loginStatus, status);
         editor.apply();
     }
 
-    public boolean getloginStatus() {
+    public boolean getLoginStatus() {
         return sharedPreferences.getBoolean(SharedPref_loginStatus, false);
     }
 

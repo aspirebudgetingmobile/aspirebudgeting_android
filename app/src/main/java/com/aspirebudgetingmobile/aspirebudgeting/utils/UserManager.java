@@ -28,6 +28,7 @@ import java.util.Objects;
 
 public class UserManager {
 
+    private ObjectFactory objectFactory = ObjectFactory.getInstance();
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private Task<GoogleSignInAccount> task;
@@ -40,7 +41,7 @@ public class UserManager {
     private static final int GOOGLE_SIGN_IN = 10;
     private static final String TAG = "USER_MANAGER";
 
-    SessionConfig sessionConfig;
+    private SessionConfig sessionConfig;
 
     public UserManager() {
     }
@@ -66,11 +67,11 @@ public class UserManager {
             account = task.getResult();
             if (account != null) {
                 // SET ALL THE DATA IN LOCAL SHARED PREFERENCE SO THAT WE CAN ACCESS IT ACROSS APPLICATION
-                sessionConfig = new SessionConfig(context);
+                sessionConfig = objectFactory.getSessionConfig();
                 sessionConfig.setEmail(account.getEmail());
                 sessionConfig.setName(account.getDisplayName());
                 sessionConfig.setProfilePic(Objects.requireNonNull(account.getPhotoUrl()).toString());
-                sessionConfig.setloginStatus(true);
+                sessionConfig.setLoginStatus(true);
             }
         }
     }
