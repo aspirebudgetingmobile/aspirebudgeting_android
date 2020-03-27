@@ -1,6 +1,8 @@
 package com.aspirebudgetingmobile.aspirebudgeting.adapters;
 
 import android.content.Context;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +51,9 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
         holder.collapsedCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                TransitionManager.beginDelayedTransition(holder.expandedCard, new AutoTransition());
                 holder.collapsedCard.animate().alpha(0f).start();
+                holder.expandedCard.animate().alpha(1f).start();
                 holder.collapsedCard.setVisibility(View.GONE);
                 holder.expandedCard.setVisibility(View.VISIBLE);
             }
@@ -59,7 +62,9 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
         holder.expandedCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                TransitionManager.beginDelayedTransition(holder.collapsedCard, new AutoTransition());
                 holder.collapsedCard.animate().alpha(1f).start();
+                holder.expandedCard.animate().alpha(0f).start();
                 holder.collapsedCard.setVisibility(View.VISIBLE);
                 holder.expandedCard.setVisibility(View.GONE);
             }
