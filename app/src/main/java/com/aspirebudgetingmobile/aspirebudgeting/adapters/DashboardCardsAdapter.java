@@ -18,13 +18,17 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAdapter.ViewHolder> {
 
     Context context;
     List<DashboardCardsModel> list;
     DecimalFormat df = new DecimalFormat("0.00");
+    String currencySymbol =  Currency.getInstance(Locale.getDefault()).getSymbol(Locale.getDefault()) + "";
 
 
     public DashboardCardsAdapter(Context context, List<DashboardCardsModel> list) {
@@ -93,9 +97,9 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
             spentAmount = view.findViewById(R.id.spentBalanceText_expandedCard);
 
             categoryName.setText(model.getCategoryName().get(i));
-            budgetedAmount.setText(model.getBudgetedAmount().get(i));
-            availableAmount.setText(model.getAvailableAmount().get(i));
-            spentAmount.setText(model.getSpentAmount().get(i));
+            budgetedAmount.setText(model.getBudgetedAmount().get(i).replace("$", currencySymbol));
+            availableAmount.setText(model.getAvailableAmount().get(i).replace("$", currencySymbol));
+            spentAmount.setText(model.getSpentAmount().get(i).replace("$", currencySymbol));
 
             holder.categoriesDynamicLayout.addView(view);
         }
@@ -116,7 +120,7 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
         for (int i = 0; i < amountList.size(); i++) {
             value += Float.parseFloat(amountList.get(i).replace("$", ""));
         }
-        return ("$" + df.format(value));
+        return ( currencySymbol + df.format(value));
     }
 
     @Override
