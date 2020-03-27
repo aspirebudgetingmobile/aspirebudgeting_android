@@ -60,7 +60,7 @@ public class Dashboard extends Fragment {
         context = view.getContext();
 
         // INITIALIZE ALL THE UTIL CLASSES
-        sessionConfig = new SessionConfig(context);
+        sessionConfig = objectFactory.getSessionConfig();
         sheetsManager = objectFactory.getSheetsManager();
 
         // FETCH THE SHEET ID FROM SESSION
