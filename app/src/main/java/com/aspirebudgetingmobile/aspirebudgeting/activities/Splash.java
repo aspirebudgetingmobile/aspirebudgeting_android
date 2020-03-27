@@ -29,7 +29,8 @@ public class Splash extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        sessionConfig = new SessionConfig(Splash.this);
+        objectFactory.initContext(Splash.this);
+        sessionConfig = objectFactory.getSessionConfig();
         userManager = objectFactory.getUserManager();
 
         if (userManager.getLastAccount(Splash.this) != null) {

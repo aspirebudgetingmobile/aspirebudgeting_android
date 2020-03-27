@@ -1,5 +1,8 @@
 package com.aspirebudgetingmobile.aspirebudgeting.utils;
 
+import android.app.Application;
+import android.content.Context;
+
 public class ObjectFactory {
 
     private static ObjectFactory objectFactory = null;
@@ -8,14 +11,22 @@ public class ObjectFactory {
 
     private static SheetsManager sheetsManager;
 
+    private SessionConfig sessionConfig;
+
+    private Context context;
+
     private ObjectFactory() {
     }
 
     public static synchronized ObjectFactory getInstance() {
         if (objectFactory == null) {
-             objectFactory = new ObjectFactory();
+            objectFactory = new ObjectFactory();
         }
         return objectFactory;
+    }
+
+    public void initContext(Context context){
+        this.context = context.getApplicationContext();
     }
 
     public UserManager getUserManager() {
@@ -30,5 +41,12 @@ public class ObjectFactory {
             sheetsManager = new SheetsManager();
         }
         return sheetsManager;
+    }
+
+    public SessionConfig getSessionConfig() {
+        if (sessionConfig == null) {
+            sessionConfig = new SessionConfig(context);
+        }
+        return sessionConfig;
     }
 }
