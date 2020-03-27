@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.activities.Home;
 import com.aspirebudgetingmobile.aspirebudgeting.models.SheetsListModel;
+import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SessionConfig;
 import com.google.android.material.card.MaterialCardView;
 
@@ -20,10 +21,10 @@ import java.util.List;
 
 public class SheetsListAdapter extends RecyclerView.Adapter<SheetsListAdapter.ViewHolder> {
 
-    Context context;
-    List<SheetsListModel> list;
-    View view;
-    SessionConfig sessionConfig;
+    private Context context;
+    private List<SheetsListModel> list;
+    private ObjectFactory objectFactory = ObjectFactory.getInstance();
+    private SessionConfig sessionConfig;
 
     public SheetsListAdapter(Context context, List<SheetsListModel> list) {
         this.context = context;
@@ -33,8 +34,8 @@ public class SheetsListAdapter extends RecyclerView.Adapter<SheetsListAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sheets_list_card, parent, false);
-        sessionConfig = new SessionConfig(context);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sheets_list_card, parent, false);
+        sessionConfig = objectFactory.getSessionConfig();
         return new ViewHolder(view);
     }
 
@@ -58,10 +59,11 @@ public class SheetsListAdapter extends RecyclerView.Adapter<SheetsListAdapter.Vi
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         MaterialCardView nameCard;
-        public ViewHolder(@NonNull View itemView) {
+
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             name = itemView.findViewById(R.id.sheetName_sheetListCard);
