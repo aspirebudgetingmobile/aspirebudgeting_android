@@ -28,7 +28,7 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
     Context context;
     List<DashboardCardsModel> list;
     DecimalFormat df = new DecimalFormat("0.00");
-    String currencySymbol =  Currency.getInstance(Locale.getDefault()).getSymbol(Locale.getDefault()) + "";
+    String currencySymbol =  Currency.getInstance(Locale.getDefault()).getSymbol(Locale.getDefault()) + " ";
 
 
     public DashboardCardsAdapter(Context context, List<DashboardCardsModel> list) {
