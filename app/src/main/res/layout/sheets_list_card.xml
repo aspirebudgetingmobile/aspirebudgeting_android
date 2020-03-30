@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        app:strokeColor="#E7E7E7"
+        android:id="@+id/sheetsNameCard"
+        app:strokeWidth="1dp"
+        app:cardCornerRadius="6dp"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/sheet_vector_icon"
+                android:tint="@color/colorPrimary"
+                android:id="@+id/sheetIcon_SheetListCard"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aspire Sheet v1"
+                android:textColor="#000"
+                android:layout_toStartOf="@id/rightArrow"
+                android:layout_centerVertical="true"
+                android:textSize="18sp"
+                android:layout_marginStart="10dp"
+                android:id="@+id/sheetName_sheetListCard"
+                android:layout_toEndOf="@id/sheetIcon_SheetListCard"/>
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/right_arrow"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/rightArrow"/>
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>

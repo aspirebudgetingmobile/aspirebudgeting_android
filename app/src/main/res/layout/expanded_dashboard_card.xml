@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView android:id="@+id/expandedCardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    app:cardCornerRadius="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:background="#424453"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="Credit Card Payments"
+            android:textColor="#fff"
+            android:fontFamily="@font/open_sans"
+            android:id="@+id/cardHeaderText_expandedCard"
+            android:textAlignment="center" />
+
+        <!--Calculated Amounts Layout-->
+
+        <LinearLayout
+            android:id="@+id/amountSummaryLayout_expandedCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_below="@id/cardHeaderText_expandedCard">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:gravity="center_horizontal"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/budgetedBalanceLayout_expandedCard"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="25sp"
+                    android:textColor="#BF9938"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:id="@+id/budgetedBalanceText_expandedCard"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Budgeted"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:id="@+id/budgetedText"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:gravity="center_horizontal"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/availableBalanceLayout_expandedCard"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="25sp"
+                    android:textColor="#3AC28F"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:id="@+id/availableBalanceText_expandedCard"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Available"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:id="@+id/availableText"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:layout_marginStart="5dp"
+                android:gravity="center_horizontal"
+                android:layout_marginEnd="5dp"
+                android:id="@+id/spentBalanceLayout_expandedCard"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0.00"
+                    android:textSize="25sp"
+                    android:textColor="#CE7976"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:id="@+id/spentBalanceText_expandedCard"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Spent"
+                    android:textColor="#fff"
+                    android:textSize="14sp"
+                    android:id="@+id/spentText"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!--Categories Listing Layout for dynamic Layout-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/categoriesDynamicLayout_expandedCard"
+            android:layout_below="@id/amountSummaryLayout_expandedCard"
+            android:layout_marginTop="10dp"/>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>
