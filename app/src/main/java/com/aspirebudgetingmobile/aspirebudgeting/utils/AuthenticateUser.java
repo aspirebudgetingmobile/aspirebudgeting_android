@@ -1,8 +1,6 @@
 package com.aspirebudgetingmobile.aspirebudgeting.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,7 +9,7 @@ import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.gms.auth.api.Auth;
+import com.aspirebudgetingmobile.aspirebudgeting.interfaces.BioMetricCallBack;
 
 import java.util.concurrent.Executor;
 
@@ -21,13 +19,15 @@ public class AuthenticateUser {
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private BiometricPrompt.PromptInfo promptInfo;
-    private int authResult = 0;
+    private BioMetricCallBack bioMetric;
 
-    public AuthenticateUser(Context context) {
+    AuthenticateUser(Context context) {
+
         this.context = context;
     }
 
-    public void initAuthUser() {
+    public void initAuthUser(BioMetricCallBack mBioMetric) {
+        bioMetric = mBioMetric;
 
         executor = ContextCompat.getMainExecutor(context);
 
@@ -37,42 +37,40 @@ public class AuthenticateUser {
                 .build();
     }
 
-    @SuppressLint("StaticFieldLeak")
-    public BiometricPrompt startAuthentication(final FragmentActivity fragContext) {
+    public void startAuthentication(final FragmentActivity fragContext) {
         // SETTING 0 FOR EXCEPTION
         // SETTING 1 FOR SUCCESS
         // SETTING 2 FOR AUTHENTICATION FAILED
         // SETTING 3 FOR USER WITH NO AUTHENTICATION SETUP
 
-        biometricPrompt = new BiometricPrompt(fragContext, executor, new BiometricPrompt.AuthenticationCallback() {
-            @Override
-            public void onAuthenticationError(int errorCode,
-                                              @NonNull CharSequence errString) {
-                super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(context, errString, Toast.LENGTH_SHORT).show();
-                authResult = 3;
-            }
+        try {
+            biometricPrompt = new BiometricPrompt(fragContext, executor, new BiometricPrompt.AuthenticationCallback() {
+                @Override
+                public void onAuthenticationError(int errorCode,
+                                                  @NonNull CharSequence errString) {
+                    super.onAuthenticationError(errorCode, errString);
+                    Log.e("BIOMETRIC_CALLBACK",  errorCode + "");
+                    bioMetric.resultCallback(3, errString.toString(), errorCode);
+                }
 
-            @Override
-            public void onAuthenticationSucceeded(
-                    @NonNull BiometricPrompt.AuthenticationResult result) {
-                super.onAuthenticationSucceeded(result);
-                Toast.makeText(context, result.toString(), Toast.LENGTH_SHORT).show();
-                authResult = 1;
-            }
+                @Override
+                public void onAuthenticationSucceeded(
+                        @NonNull BiometricPrompt.AuthenticationResult result) {
+                    super.onAuthenticationSucceeded(result);
+                    bioMetric.resultCallback(1, "success", null);
+                }
 
-            @Override
-            public void onAuthenticationFailed() {
-                super.onAuthenticationFailed();
-                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
-                authResult = 2;
+                @Override
+                public void onAuthenticationFailed() {
+                    super.onAuthenticationFailed();
+                    bioMetric.resultCallback(2, "failed", null);
+                }
+            });
 
-            }
-        });
-
-        biometricPrompt.authenticate(promptInfo);
-
-        return biometricPrompt;
+            biometricPrompt.authenticate(promptInfo);
+        } catch (Exception e){
+            bioMetric.resultCallback(0, e.getMessage(), null);
+        }
     }
 
 }
