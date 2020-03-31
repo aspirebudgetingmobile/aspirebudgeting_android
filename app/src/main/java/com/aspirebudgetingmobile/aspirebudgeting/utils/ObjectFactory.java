@@ -13,6 +13,8 @@ public class ObjectFactory {
 
     private SessionConfig sessionConfig;
 
+    private AuthenticateUser authenticateUser;
+
     private Context context;
 
     private ObjectFactory() {
@@ -48,5 +50,12 @@ public class ObjectFactory {
             sessionConfig = new SessionConfig(context);
         }
         return sessionConfig;
+    }
+
+    public AuthenticateUser getAuthenticateUser() {
+        if (authenticateUser == null) {
+            authenticateUser = new AuthenticateUser(context);
+        }
+        return authenticateUser;
     }
 }
