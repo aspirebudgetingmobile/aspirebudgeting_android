@@ -51,7 +51,7 @@ public class Splash extends AppCompatActivity {
         if (Objects.requireNonNull(keyguardManager).isKeyguardSecure()){
             beginAuthorization();
         } else {
-            checkUserTypeAndIntent();
+            checkUserTypeAndIntent(1500);
         }
     }
 
@@ -68,7 +68,7 @@ public class Splash extends AppCompatActivity {
                         break;
                     case 1:
                         // Auth successful
-                        checkUserTypeAndIntent();
+                        checkUserTypeAndIntent(1000);
                         break;
                     case 2:
                         // Auth Failed
@@ -77,7 +77,7 @@ public class Splash extends AppCompatActivity {
                     case 3:
                         if (Objects.requireNonNull(errorCode) == 14) {
                             // No password set
-                            checkUserTypeAndIntent();
+                            checkUserTypeAndIntent(1000);
                         } else if (Objects.requireNonNull(errorCode) == 10) {
                             // Authentication cancelled
                             finish();
@@ -90,7 +90,7 @@ public class Splash extends AppCompatActivity {
         authenticateUser.startAuthentication(Splash.this);
     }
 
-    private void checkUserTypeAndIntent() {
+    private void checkUserTypeAndIntent(long delay) {
 
         if (userManager.getLastAccount(Splash.this) != null) {
             // USER HAS ALREADY SIGNED IN
@@ -102,7 +102,7 @@ public class Splash extends AppCompatActivity {
                         startActivity(new Intent(Splash.this, SheetsList.class));
                         finish();
                     }
-                }, 1000);
+                }, delay);
             } else {
                 // USER HAS A SHEET SELECTED
                 new Handler().postDelayed(new Runnable() {
@@ -111,7 +111,7 @@ public class Splash extends AppCompatActivity {
                         startActivity(new Intent(Splash.this, Home.class));
                         finish();
                     }
-                }, 1000);
+                }, delay);
             }
 
         } else {
@@ -122,7 +122,7 @@ public class Splash extends AppCompatActivity {
                     startActivity(new Intent(Splash.this, Login.class));
                     finish();
                 }
-            }, 1000);
+            }, delay);
         }
     }
 }
