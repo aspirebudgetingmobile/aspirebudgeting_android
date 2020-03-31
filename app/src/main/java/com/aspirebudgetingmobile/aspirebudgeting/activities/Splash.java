@@ -24,11 +24,11 @@ import javax.annotation.Nullable;
 
 public class Splash extends AppCompatActivity {
 
-    ObjectFactory objectFactory = ObjectFactory.getInstance();
-    UserManager userManager;
-    SessionConfig sessionConfig;
-    AuthenticateUser authenticateUser;
-    KeyguardManager keyguardManager;
+    private ObjectFactory objectFactory = ObjectFactory.getInstance();
+    private UserManager userManager;
+    private SessionConfig sessionConfig;
+    private AuthenticateUser authenticateUser;
+    private KeyguardManager keyguardManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
