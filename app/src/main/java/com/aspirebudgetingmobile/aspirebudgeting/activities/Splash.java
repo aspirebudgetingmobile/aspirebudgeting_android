@@ -1,5 +1,7 @@
 package com.aspirebudgetingmobile.aspirebudgeting.activities;
 
+import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +28,7 @@ public class Splash extends AppCompatActivity {
     UserManager userManager;
     SessionConfig sessionConfig;
     AuthenticateUser authenticateUser;
+    KeyguardManager keyguardManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,21 @@ public class Splash extends AppCompatActivity {
         userManager = objectFactory.getUserManager();
         authenticateUser = objectFactory.getAuthenticateUser();
 
+        keyguardManager = (KeyguardManager) getSystemService(Activity.KEYGUARD_SERVICE);
+
+        if (Objects.requireNonNull(keyguardManager).isKeyguardSecure()){
+            beginAuthorization();
+        } else {
+            checkUserTypeAndIntent();
+        }
+    }
+
+    private void beginAuthorization() {
         // Will Generate a callback from util class when task is done
         authenticateUser.initAuthUser(new BioMetricCallBack() {
             @Override
             public void resultCallback(int i, String message, @Nullable Integer errorCode) {
-                Log.e("BIOMETRIC_CALLBACK",  i + "  " + message);
+                Log.e("BIOMETRIC_CALLBACK", i + "  " + message);
                 switch (i) {
                     case 0:
                         // Some kind of exception occurred
@@ -62,20 +75,17 @@ public class Splash extends AppCompatActivity {
                         Toast.makeText(Splash.this, "Authentication Failed ! Please try again.", Toast.LENGTH_LONG).show();
                         break;
                     case 3:
-
-                        if (Objects.requireNonNull(errorCode) == 14){
+                        if (Objects.requireNonNull(errorCode) == 14) {
                             // No password set
                             checkUserTypeAndIntent();
-                        } else if (Objects.requireNonNull(errorCode) == 10){
+                        } else if (Objects.requireNonNull(errorCode) == 10) {
                             // Authentication cancelled
                             finish();
                         }
-
                         break;
                 }
             }
         });
-
         // Trigger Password screen
         authenticateUser.startAuthentication(Splash.this);
     }
