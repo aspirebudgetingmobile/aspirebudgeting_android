@@ -2,7 +2,6 @@ package com.aspirebudgetingmobile.aspirebudgeting.utils;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -32,9 +31,6 @@ public class SheetsManager {
 
     private List<List<Object>> fetchData(Context context, String sheetID, String range) {
 
-        List<Object> fakeBuffer = new ArrayList<>();
-        fakeBuffer.add("FakeBuffer");
-
         userManager.getLastAccount(context);
         userManager.initCredential(context);
         credential = userManager.getCredential();
@@ -53,15 +49,19 @@ public class SheetsManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Objects.requireNonNull(values).add(fakeBuffer);
+
         return values;
     }
 
-    public List<DashboardCardsModel> fetchCategoriesAndGroups (Context context, String sheetID){
+    public List<DashboardCardsModel> fetchCategoriesAndGroups(Context context, String sheetID) {
         return parseFetchedData(fetchData(context, sheetID, "Dashboard!H4:O"));
     }
 
-    private List<DashboardCardsModel> parseFetchedData(List<List<Object>> fetchedData){
+    private List<DashboardCardsModel> parseFetchedData(List<List<Object>> fetchedData) {
+
+        List<Object> fakeBuffer = new ArrayList<>();
+        fakeBuffer.add("FakeBuffer");
+        Objects.requireNonNull(fetchedData).add(fakeBuffer);
 
         List<DashboardCardsModel> list = new ArrayList<>();
         JSONArray parsedData = new JSONArray();
@@ -105,8 +105,8 @@ public class SheetsManager {
                     spent = new ArrayList<>();
                     available = new ArrayList<>();
 
-                    name =  test.toString().replace("[", "").replace("]", "");
-                    innerObject.put("name",name);
+                    name = test.toString().replace("[", "").replace("]", "");
+                    innerObject.put("name", name);
 
                 } else {
                     Objects.requireNonNull(categoryName).add(String.valueOf(test.get(0)));
@@ -121,5 +121,21 @@ public class SheetsManager {
         }
 
         return list;
+    }
+
+    public boolean verifySheet(Context context, String sheetID) {
+        List<Object> parentObject = fetchData(context, sheetID, "BackendData!2:2").get(0);
+        String version = parentObject.get(parentObject.size() - 1).toString();
+        return isSheetVersionSupported(version);
+    }
+
+    private boolean isSheetVersionSupported(String version) {
+
+        List<String> supportedVersion = new ArrayList<>();
+        supportedVersion.add("3.1.0");
+        supportedVersion.add("3.0");
+        supportedVersion.add("2.8");
+
+        return supportedVersion.contains(version);
     }
 }
