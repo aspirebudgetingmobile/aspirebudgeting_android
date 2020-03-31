@@ -1,11 +1,16 @@
 package com.aspirebudgetingmobile.aspirebudgeting.adapters;
 
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +20,7 @@ import com.aspirebudgetingmobile.aspirebudgeting.activities.Home;
 import com.aspirebudgetingmobile.aspirebudgeting.models.SheetsListModel;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SessionConfig;
+import com.aspirebudgetingmobile.aspirebudgeting.utils.SheetsManager;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
@@ -25,6 +31,9 @@ public class SheetsListAdapter extends RecyclerView.Adapter<SheetsListAdapter.Vi
     private List<SheetsListModel> list;
     private ObjectFactory objectFactory = ObjectFactory.getInstance();
     private SessionConfig sessionConfig;
+    private SheetsManager sheetsManager;
+    private boolean isSheetVerified = false;
+    private ProgressDialog progressDialog;
 
     public SheetsListAdapter(Context context, List<SheetsListModel> list) {
         this.context = context;
@@ -36,6 +45,9 @@ public class SheetsListAdapter extends RecyclerView.Adapter<SheetsListAdapter.Vi
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sheets_list_card, parent, false);
         sessionConfig = objectFactory.getSessionConfig();
+        sheetsManager = objectFactory.getSheetsManager();
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Verifying Sheet, please wait...");
         return new ViewHolder(view);
     }
 
@@ -47,12 +59,40 @@ public class SheetsListAdapter extends RecyclerView.Adapter<SheetsListAdapter.Vi
         holder.nameCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sessionConfig.setSheetId(model.getId());
-                context.startActivity(new Intent(context, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                progressDialog.show();
+                verifySheet(model.getId());
             }
         });
 
     }
+
+    @SuppressLint("StaticFieldLeak")
+    private void verifySheet(final String sheetID) {
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                isSheetVerified = sheetsManager.verifySheet(context, sheetID);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+                if(progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
+                if (isSheetVerified){
+                    sessionConfig.setSheetId(sheetID);
+                    context.startActivity(new Intent(context, Home.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                } else {
+                    Toast.makeText(context, "Sheet not verified, kindly select an aspire sheet", Toast.LENGTH_LONG).show();
+                }
+            }
+        }.execute();
+    }
+
 
     @Override
     public int getItemCount() {

@@ -63,6 +63,9 @@ dependencies {
     // Sheets API Library
     implementation 'com.google.apis:google-api-services-sheets:v4-rev581-1.25.0'
 
+    // BioMetric
+    implementation 'androidx.biometric:biometric:1.0.1'
+
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
