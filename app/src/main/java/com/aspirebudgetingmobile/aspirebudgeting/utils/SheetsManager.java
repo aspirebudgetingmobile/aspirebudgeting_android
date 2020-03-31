@@ -124,9 +124,13 @@ public class SheetsManager {
     }
 
     public boolean verifySheet(Context context, String sheetID) {
-        List<Object> parentObject = fetchData(context, sheetID, "BackendData!2:2").get(0);
-        String version = parentObject.get(parentObject.size() - 1).toString();
-        return isSheetVersionSupported(version);
+        try {
+            List<Object> parentObject = fetchData(context, sheetID, "BackendData!2:2").get(0);
+            String version = parentObject.get(parentObject.size() - 1).toString();
+            return isSheetVersionSupported(version);
+        } catch (Exception e){
+            return false;
+        }
     }
 
     private boolean isSheetVersionSupported(String version) {
