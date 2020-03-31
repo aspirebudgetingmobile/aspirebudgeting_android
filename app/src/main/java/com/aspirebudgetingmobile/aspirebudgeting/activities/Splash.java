@@ -39,6 +39,7 @@ public class Splash extends AppCompatActivity {
 
         authenticateUser.initAuthUser();
 
+        authenticateUser.startAuthentication(Splash.this);
         /*switch (authenticateUser.startAuthentication(Splash.this)){
             case 0:
                 // Some kind of exception occurred
