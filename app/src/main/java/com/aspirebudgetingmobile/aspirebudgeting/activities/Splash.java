@@ -49,7 +49,12 @@ public class Splash extends AppCompatActivity {
         keyguardManager = (KeyguardManager) getSystemService(Activity.KEYGUARD_SERVICE);
 
         if (Objects.requireNonNull(keyguardManager).isKeyguardSecure()){
-            beginAuthorization();
+            if (sessionConfig.getLoginStatus()){
+                beginAuthorization();
+            } else {
+                checkUserTypeAndIntent(1500);
+            }
+
         } else {
             checkUserTypeAndIntent(1500);
         }
