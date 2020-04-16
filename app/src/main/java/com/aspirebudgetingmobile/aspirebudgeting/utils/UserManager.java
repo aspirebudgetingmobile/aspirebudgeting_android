@@ -49,7 +49,7 @@ public class UserManager {
     public void initializeGoogleSignIn(Context context) {
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
-                .requestScopes(new Scope("https://www.googleapis.com/auth/spreadsheets"), new Scope("https://www.googleapis.com/auth/drive"))
+                .requestScopes(new Scope("https://www.googleapis.com/auth/drive"))
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
     }
@@ -121,7 +121,7 @@ public class UserManager {
 
     public int initCredential(Context context) {
         if (account != null) {
-            credential = GoogleAccountCredential.usingOAuth2(context, Collections.singleton(DriveScopes.DRIVE_FILE));
+            credential = GoogleAccountCredential.usingOAuth2(context, Collections.singleton(DriveScopes.DRIVE));
             credential.setSelectedAccount(account.getAccount());
             return 1;
         } else {

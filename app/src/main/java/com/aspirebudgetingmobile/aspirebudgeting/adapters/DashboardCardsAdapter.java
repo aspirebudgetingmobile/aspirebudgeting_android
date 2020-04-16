@@ -3,6 +3,7 @@ package com.aspirebudgetingmobile.aspirebudgeting.adapters;
 import android.content.Context;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,11 @@ import java.util.Locale;
 
 public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAdapter.ViewHolder> {
 
-    Context context;
-    List<DashboardCardsModel> list;
-    DecimalFormat df = new DecimalFormat("0.00");
-    String currencySymbol =  Currency.getInstance(Locale.getDefault()).getSymbol(Locale.getDefault()) + " ";
-
+    private Context context;
+    private List<DashboardCardsModel> list;
+    private DecimalFormat df = new DecimalFormat("0.00");
+    private String currencySymbol = Currency.getInstance(Locale.getDefault()).getSymbol(Locale.getDefault()) + " ";
+    private NumberFormat numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
     public DashboardCardsAdapter(Context context, List<DashboardCardsModel> list) {
         this.context = context;
@@ -82,11 +83,11 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
         holder.availableExpandedText.setText(getCalculatedValue(model.getAvailableAmount()));
         holder.spentExpandedText.setText(getCalculatedValue(model.getSpentAmount()));
 
-        if(holder.categoriesDynamicLayout.getChildCount() > 0){
+        if (holder.categoriesDynamicLayout.getChildCount() > 0) {
             holder.categoriesDynamicLayout.removeAllViews();
         }
 
-        for(int i=0; i<model.getCategoryName().size(); i++){
+        for (int i = 0; i < model.getCategoryName().size(); i++) {
             View view = LayoutInflater.from(context).inflate(R.layout.expanded_categories_data_card, null);
 
             TextView categoryName, budgetedAmount, availableAmount, spentAmount;
@@ -118,9 +119,21 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
     private String getCalculatedValue(List<String> amountList) {
         double value = 0.00;
         for (int i = 0; i < amountList.size(); i++) {
-            value += Float.parseFloat(amountList.get(i).replace("$", ""));
+            Log.e("PARSE_NUMBER", "getCalculatedValue: " + amountList.get(i));
+            try {
+
+                value += numberFormat.parse(amountList.get(i)).doubleValue();
+            } catch (Exception e) {
+                e.printStackTrace();
+                try {
+                    value += NumberFormat.getCurrencyInstance(Locale.US).parse(amountList.get(i)).doubleValue();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+
         }
-        return ( currencySymbol + df.format(value));
+        return (currencySymbol + df.format(value));
     }
 
     @Override

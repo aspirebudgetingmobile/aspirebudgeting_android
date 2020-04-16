@@ -46,7 +46,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="$0.00"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
+                    android:singleLine="true"
                     android:textColor="#3AC28F"
                     android:fontFamily="@font/open_sans_bold"
                     android:id="@+id/availableBalanceText"/>
@@ -85,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:text="$0.00"
                     android:textSize="20sp"
+                    android:singleLine="true"
                     android:textColor="#CE7976"
                     android:fontFamily="@font/open_sans_bold"
                     android:id="@+id/spentBalanceText"/>
