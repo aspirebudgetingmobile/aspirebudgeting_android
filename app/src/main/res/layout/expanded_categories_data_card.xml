@@ -12,7 +12,6 @@
         android:layout_marginStart="10dp"
         android:drawablePadding="5dp"
         android:text="AmEx"
-        android:drawableStart="@drawable/wallet_icon"
         android:textColor="#fff"
         android:fontFamily="@font/open_sans"
         android:id="@+id/categoryName_expandedCategory" />
@@ -41,7 +40,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$0.00"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:singleLine="true"
                 android:textColor="#BF9938"
                 android:fontFamily="@font/open_sans_bold"
                 android:id="@+id/budgetedBalanceText_expandedCard" />
@@ -71,7 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$0.00"
-                android:textSize="20sp"
+                android:textSize="18sp"
+                android:singleLine="true"
                 android:textColor="#3AC28F"
                 android:fontFamily="@font/open_sans_bold"
                 android:id="@+id/availableBalanceText_expandedCard" />
@@ -100,7 +101,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$0.00"
-                android:textSize="20sp"
+                android:singleLine="true"
+                android:textSize="18sp"
                 android:textColor="#CE7976"
                 android:fontFamily="@font/open_sans_bold"
                 android:id="@+id/spentBalanceText_expandedCard" />
