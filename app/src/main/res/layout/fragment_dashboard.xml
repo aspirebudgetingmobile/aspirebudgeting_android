@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:visibility="gone"
             android:layout_centerInParent="true"
             android:orientation="horizontal">
 
@@ -36,5 +37,11 @@
                 android:textColor="#fff" />
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/aspireLogoDashboard"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/aspire_logo"
+            android:layout_centerInParent="true"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,17 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.aspirebudgetingmobile.aspirebudgeting.activities.Login;
 import com.aspirebudgetingmobile.aspirebudgeting.models.SheetsListModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -73,6 +78,25 @@ public class UserManager {
                 sessionConfig.setProfilePic(Objects.requireNonNull(account.getPhotoUrl()).toString());
                 sessionConfig.setLoginStatus(true);
             }
+        }
+    }
+
+    public void signOutUser(final Context context) {
+
+        if (mGoogleSignInClient != null) {
+            mGoogleSignInClient.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    // Clear all previous activities and send user to login screen
+                    context.startActivity(new Intent(context, Login.class)
+                            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
@@ -139,11 +163,10 @@ public class UserManager {
                 .build();
     }
 
-
     public List<SheetsListModel> getFiles() {
 
         Drive.Files.List request = null;
-        if (sheetList.size() > 0){
+        if (sheetList.size() > 0) {
             sheetList.clear();
         }
         try {
