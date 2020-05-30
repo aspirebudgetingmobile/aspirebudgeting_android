@@ -74,6 +74,7 @@ public class SheetsManager {
     public List<DashboardCardsModel> fetchCategoriesAndGroups(Context context, String sheetID) {
         getTransactionCategories(context, sheetID);
         getTransactionAccounts(context, sheetID);
+        verifySheet(context, sheetID);
         return parseFetchedData(fetchData(context, sheetID, "Dashboard!H4:O"));
     }
 
@@ -143,7 +144,6 @@ public class SheetsManager {
         return list;
     }
 
-    // TODO : IMPLEMENT VERIFY SHEET EVERY TIME APP OPENS
     public boolean verifySheet(Context context, String sheetID) {
         try {
             List<Object> parentObject = fetchData(context, sheetID, "BackendData!2:2").get(0);
