@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.adapters.DashboardCardsAdapter;
@@ -53,6 +54,7 @@ public class Dashboard extends Fragment {
 
     private LinearLayout loadingLayout;
     private ImageView aspireLogoDashboard;
+    private SwipeRefreshLayout swipeRefresh_dashboard;
 
     public Dashboard() {}
 
@@ -63,8 +65,47 @@ public class Dashboard extends Fragment {
         view = inflater.inflate(R.layout.fragment_dashboard, container, false);
         context = view.getContext();
 
-        aspireLogoDashboard = view.findViewById(R.id.aspireLogoDashboard);
+        // FETCH AND INITIALIZE THE VIEWS AND CLASSES
+        fetchIDs_init();
+        // INIT LOADING ANIMATION
+        loadingAnimation();
+        // FETCH CATEGORIES AND GROUPS TO DISPLAY
+        getGroupToDisplay();
+        // ON CLICK LISTENERS
+        onClickListeners();
 
+        return view;
+    }
+
+    private void onClickListeners() {
+        swipeRefresh_dashboard.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getGroupToDisplay();
+            }
+        });
+    }
+
+    private void fetchIDs_init() {
+        aspireLogoDashboard = view.findViewById(R.id.aspireLogoDashboard);
+        swipeRefresh_dashboard = view.findViewById(R.id.swipeRefresh_dashboard);
+        swipeRefresh_dashboard.setRefreshing(true);
+
+        // INITIALIZE ALL THE UTIL CLASSES
+        sessionConfig = objectFactory.getSessionConfig();
+        sheetsManager = objectFactory.getSheetsManager();
+
+        // FETCH THE SHEET ID FROM SESSION
+        sheetID = sessionConfig.getSheetId();
+
+        // FETCH ID OF VIEWS IN LAYOUT
+        loadingLayout = view.findViewById(R.id.loadingLayout);
+
+        recyclerView = view.findViewById(R.id.dashboardCardsRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
+    }
+
+    private void loadingAnimation() {
         // FADE IN FADE OUT ANIMATION
         Animation connectingAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.alpha_infinite);
         aspireLogoDashboard.startAnimation(connectingAnimation);
@@ -102,25 +143,6 @@ public class Dashboard extends Fragment {
         anim.setRepeatMode(ValueAnimator.REVERSE);
 
         anim.start();
-
-
-        // INITIALIZE ALL THE UTIL CLASSES
-        sessionConfig = objectFactory.getSessionConfig();
-        sheetsManager = objectFactory.getSheetsManager();
-
-        // FETCH THE SHEET ID FROM SESSION
-        sheetID = sessionConfig.getSheetId();
-
-        // FETCH ID OF VIEWS IN LAYOUT
-        loadingLayout = view.findViewById(R.id.loadingLayout);
-
-        recyclerView = view.findViewById(R.id.dashboardCardsRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
-
-        // FETCH CATEGORIES AND GROUPS TO DISPLAY
-        //getGroupToDisplay();
-
-        return view;
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -141,10 +163,14 @@ public class Dashboard extends Fragment {
                 adapter = new DashboardCardsAdapter(context, list);
                 recyclerView.setAdapter(adapter);
                 loadingLayout.setVisibility(View.GONE);
+                swipeRefresh_dashboard.setRefreshing(false);
             }
         }.execute();
     }
 
+    public void reloadCards(){
+        getGroupToDisplay();
+    }
 }
 
 

@@ -39,6 +39,10 @@ public class Home extends AppCompatActivity {
     ObjectFactory objectFactory = ObjectFactory.getInstance();
     UserManager userManager;
 
+    // Fragments
+    Dashboard dashboard = new Dashboard();
+    Transaction transaction = new Transaction();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,10 +61,28 @@ public class Home extends AppCompatActivity {
         settingsSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         pagerAdapterHome = new ViewPagerAdapter_Home(getSupportFragmentManager(), 1);
-        pagerAdapterHome.addFragment(new Dashboard(), "Dashboard");
-        pagerAdapterHome.addFragment(new Transaction(), "Transaction");
+        pagerAdapterHome.addFragment(dashboard, "Dashboard");
+        pagerAdapterHome.addFragment(transaction, "Transaction");
         viewPager.setAdapter(pagerAdapterHome);
         tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1)
+                    transaction.initValues();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
         getVersionName();
 
@@ -96,6 +118,10 @@ public class Home extends AppCompatActivity {
                 userManager.signOutUser(Home.this);
             }
         });
+    }
+
+    public void reloadCards(){
+        dashboard.reloadCards();
     }
 
 }
