@@ -3,7 +3,7 @@ package com.aspirebudgetingmobile.aspirebudgeting.utils;
 import android.content.Context;
 import android.util.Log;
 
-import com.aspirebudgetingmobile.aspirebudgeting.interfaces.TransactionCallBack;
+import com.aspirebudgetingmobile.aspirebudgeting.interfaces.AddTransactionCallBack;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -17,10 +17,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class SheetsManager {
 
@@ -157,6 +155,7 @@ public class SheetsManager {
     private boolean isSheetVersionSupported(String version) {
 
         List<String> supportedVersion = new ArrayList<>();
+        supportedVersion.add(threeTwo);
         supportedVersion.add(threeOne);
         supportedVersion.add(three);
         supportedVersion.add(twoEight);
@@ -217,7 +216,7 @@ public class SheetsManager {
     }
 
     public void addTransaction(String amount, String memo, String date, String category, String account,
-                               int transactionType, int approvalType, TransactionCallBack transactionCallBack) {
+                               int transactionType, int approvalType, AddTransactionCallBack transactionCallBack) {
 
         try {
             AppendValuesResponse appendTransaction =
@@ -259,7 +258,7 @@ public class SheetsManager {
 
         valuesToInsert.add(category);
         valuesToInsert.add(account);
-        valuesToInsert.add(String.format("(%s) - Added from Aspire Android app", memo));
+        valuesToInsert.add(String.format("%s - Added from Aspire Android app", memo));
 
         switch (sessionConfig.getSheetVersion()) {
             case twoEight:

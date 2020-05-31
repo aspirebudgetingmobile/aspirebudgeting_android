@@ -13,7 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.adapters.ViewPagerAdapter_Home;
 import com.aspirebudgetingmobile.aspirebudgeting.fragments.Dashboard;
-import com.aspirebudgetingmobile.aspirebudgeting.fragments.Transaction;
+import com.aspirebudgetingmobile.aspirebudgeting.fragments.AddTransactionFragment;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.UserManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -41,7 +41,7 @@ public class Home extends AppCompatActivity {
 
     // Fragments
     Dashboard dashboard = new Dashboard();
-    Transaction transaction = new Transaction();
+    AddTransactionFragment transaction = new AddTransactionFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

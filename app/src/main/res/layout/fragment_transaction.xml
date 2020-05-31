@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".fragments.Transaction">
+    tools:context=".fragments.AddTransactionFragment">
 
     <LinearLayout
         android:id="@+id/backgroundLayout"
@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:background="@color/aspireDarkPrimaryColor"
         android:orientation="vertical"
-        tools:context=".fragments.Transaction">
+        tools:context=".fragments.AddTransactionFragment">
 
         <EditText
             android:id="@+id/amountEditText_transactions"

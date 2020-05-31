@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.activities.Home;
-import com.aspirebudgetingmobile.aspirebudgeting.interfaces.TransactionCallBack;
+import com.aspirebudgetingmobile.aspirebudgeting.interfaces.AddTransactionCallBack;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.BasicUtils;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SheetsManager;
@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class Transaction extends Fragment {
+public class AddTransactionFragment extends Fragment {
 
     private EditText amountEditText_transactions, addMemoEditText_transactions;
     private TextView selectDateEditText_transactions, inFlowTextView_transactions,
@@ -56,7 +56,7 @@ public class Transaction extends Fragment {
     private String selectedDate = "";
     private ProgressDialog progressDialog;
 
-    public Transaction() {
+    public AddTransactionFragment() {
     }
 
     @Override
@@ -208,7 +208,7 @@ public class Transaction extends Fragment {
             protected Void doInBackground(Void... voids) {
                 sheetsManager.addTransaction(amount, memo, selectedDate,
                         selectedCategory, selectedAccount, selectedTransactionType, selectedApprovalType
-                        , new TransactionCallBack() {
+                        , new AddTransactionCallBack() {
                             @Override
                             public void onSuccess() {
                                 progressDialog.dismiss();

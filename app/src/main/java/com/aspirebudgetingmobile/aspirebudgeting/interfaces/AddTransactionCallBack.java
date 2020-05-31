@@ -1,6 +1,6 @@
 package com.aspirebudgetingmobile.aspirebudgeting.interfaces;
 
-public interface TransactionCallBack {
+public interface AddTransactionCallBack {
     void onSuccess();
     void onError();
 }
