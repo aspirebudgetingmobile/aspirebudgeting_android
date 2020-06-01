@@ -246,7 +246,7 @@ public class AddTransactionFragment extends Fragment {
     }
 
     private void updateLabel() {
-        String myFormat = "dd/MM/yyyy";
+        String myFormat = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         selectedDate = sdf.format(myCalendar.getTime());
         selectDateEditText_transactions.setText(selectedDate);

@@ -70,10 +70,24 @@ public class SheetsManager {
     }
 
     public List<DashboardCardsModel> fetchCategoriesAndGroups(Context context, String sheetID) {
+        verifySheet(context, sheetID);
         getTransactionCategories(context, sheetID);
         getTransactionAccounts(context, sheetID);
-        verifySheet(context, sheetID);
-        return parseFetchedData(fetchData(context, sheetID, "Dashboard!H4:O"));
+
+        String rangeForCategoryAndGroups = "";
+
+        switch (sessionConfig.getSheetVersion()){
+            case twoEight:
+            case three:
+            case threeOne:
+                rangeForCategoryAndGroups = "Dashboard!F4:O";
+                break;
+            case threeTwo:
+                rangeForCategoryAndGroups = "Dashboard!F6:O";
+                break;
+
+        }
+        return parseFetchedData(fetchData(context, sheetID, rangeForCategoryAndGroups));
     }
 
     private List<DashboardCardsModel> parseFetchedData(List<List<Object>> fetchedData) {
@@ -94,11 +108,13 @@ public class SheetsManager {
             List<String> available = null;
             String name = "";
 
+            // Running a loop for all the inner List<Object>
             for (int i = 0; i < fetchedData.size(); i++) {
 
                 List<Object> test = fetchedData.get(i);
 
-                if (test.size() == 1) {
+                // check if the first element of the List is a solid diamond, then it is a group
+                if (test.get(0).toString().equalsIgnoreCase("✦")) {
 
                     if (innerObject != null) {
                         innerObject.put("categoryName", categoryName);
@@ -124,14 +140,15 @@ public class SheetsManager {
                     spent = new ArrayList<>();
                     available = new ArrayList<>();
 
-                    name = test.toString().replace("[", "").replace("]", "");
+                    name = test.get(2).toString();
                     innerObject.put("name", name);
 
                 } else {
-                    Objects.requireNonNull(categoryName).add(String.valueOf(test.get(0)));
-                    budgeted.add(String.valueOf(test.get(7)));
-                    spent.add(String.valueOf(test.get(4)));
-                    available.add(String.valueOf(test.get(1)));
+                    // we are in a inner category
+                    Objects.requireNonNull(categoryName).add(String.valueOf(test.get(2)));
+                    budgeted.add(String.valueOf(test.get(9)));
+                    spent.add(String.valueOf(test.get(6)));
+                    available.add(String.valueOf(test.get(3)));
                 }
             }
 

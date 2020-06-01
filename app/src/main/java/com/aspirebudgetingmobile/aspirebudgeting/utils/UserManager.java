@@ -49,6 +49,7 @@ public class UserManager {
     private SessionConfig sessionConfig;
 
     public UserManager() {
+        sessionConfig = objectFactory.getSessionConfig();
     }
 
     public void initializeGoogleSignIn(Context context) {
@@ -72,7 +73,6 @@ public class UserManager {
             account = task.getResult();
             if (account != null) {
                 // SET ALL THE DATA IN LOCAL SHARED PREFERENCE SO THAT WE CAN ACCESS IT ACROSS APPLICATION
-                sessionConfig = objectFactory.getSessionConfig();
                 sessionConfig.setEmail(account.getEmail());
                 sessionConfig.setName(account.getDisplayName());
                 sessionConfig.setProfilePic(Objects.requireNonNull(account.getPhotoUrl()).toString());
@@ -87,6 +87,12 @@ public class UserManager {
             mGoogleSignInClient.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
+                    // clear all data in cache
+                    sessionConfig.setSheetVersion("NA");
+                    sessionConfig.setEmail("none");
+                    sessionConfig.setLoginStatus(false);
+                    sessionConfig.setSheetId("none");
+                    sessionConfig.setName("none");
                     // Clear all previous activities and send user to login screen
                     context.startActivity(new Intent(context, Login.class)
                             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
