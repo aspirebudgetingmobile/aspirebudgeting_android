@@ -26,7 +26,7 @@
             android:drawableStart="@drawable/dollar_icon"
             android:drawablePadding="10dp"
             android:hint="Enter Amount"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:padding="10dp"
             android:textColorHint="#353746" />
 

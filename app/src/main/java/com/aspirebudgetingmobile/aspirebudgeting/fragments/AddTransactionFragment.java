@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class AddTransactionFragment extends Fragment {
     private DatePickerDialog.OnDateSetListener date;
     private String selectedDate = "";
     private ProgressDialog progressDialog;
+    private boolean result = false;
 
     public AddTransactionFragment() {
     }
@@ -143,7 +145,7 @@ public class AddTransactionFragment extends Fragment {
                 } else {
                     BasicUtils.hideKeyboard(Objects.requireNonNull(getActivity()));
                     progressDialog.show();
-                    startAppendingTransaction(amountEditText_transactions.getText().toString(), addMemoEditText_transactions.getText().toString());
+                    startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), addMemoEditText_transactions.getText().toString().trim());
                 }
             }
         });
@@ -211,14 +213,12 @@ public class AddTransactionFragment extends Fragment {
                         , new AddTransactionCallBack() {
                             @Override
                             public void onSuccess() {
-                                progressDialog.dismiss();
-                                Toast.makeText(context, "Transactions Uploaded !", Toast.LENGTH_SHORT).show();
-                                ((Home) context).reloadCards();
+                                result = true;
                             }
 
                             @Override
                             public void onError() {
-                                progressDialog.dismiss();
+                                result = false;
                             }
                         });
                 return null;
@@ -227,6 +227,14 @@ public class AddTransactionFragment extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                if (result){
+                    progressDialog.dismiss();
+                    Toast.makeText(context, "Transactions Uploaded !", Toast.LENGTH_SHORT).show();
+                    ((Home) context).reloadCards();
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(context, "Transactions Upload failed !", Toast.LENGTH_SHORT).show();
+                }
             }
         }.execute();
     }

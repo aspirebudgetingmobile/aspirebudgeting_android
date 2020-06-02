@@ -239,7 +239,7 @@ public class SheetsManager {
             AppendValuesResponse appendTransaction =
                     service.spreadsheets().values().append(sessionConfig.getSheetId(),
                             appendTransactionRange, createSheetsValueRangeFrom(amount, memo, date, category, account, transactionType, approvalType))
-                    .setValueInputOption("RAW")
+                    .setValueInputOption("USER_ENTERED")
                     .execute();
 
             if (appendTransaction.getUpdates().getUpdatedRange() !=null &&
