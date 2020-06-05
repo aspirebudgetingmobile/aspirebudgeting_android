@@ -56,13 +56,21 @@ public class Login extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GOOGLE_SIGN_IN) {
-            if (resultCode == RESULT_OK) {
-                // GOOGLE LOGIN SUCCESSFUL AND GIVE USER_MANAGER DATA
-                userManager.setSignedInAccount(GoogleSignIn.getSignedInAccountFromIntent(data), Login.this);
-                handleSignInResult();
-            } else {
-                // IF USER CANCELS OR STOPS THE GOOGLE LOGIN PROCESS MIDWAY
-                Log.e(TAG, "onActivityResult: GOOGLE LOGIN FAILED");
+            try {
+                if (resultCode == RESULT_OK) {
+                    if (data != null) {
+                        // GOOGLE LOGIN SUCCESSFUL AND GIVE USER_MANAGER DATA
+                        userManager.setSignedInAccount(GoogleSignIn.getSignedInAccountFromIntent(data), Login.this);
+                        handleSignInResult();
+                    } else {
+                        Toast.makeText(this, "Error occurred, please login again.", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    // IF USER CANCELS OR STOPS THE GOOGLE LOGIN PROCESS MIDWAY
+                    Log.e(TAG, "onActivityResult: GOOGLE LOGIN FAILED");
+                }
+            } catch (Exception e) {
+                Toast.makeText(this, "Error occurred, please try again.", Toast.LENGTH_LONG).show();
             }
         }
     }
