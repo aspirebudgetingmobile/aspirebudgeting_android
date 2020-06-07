@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@color/colorPrimary"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/accountNameText_accountBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans"
+                android:text="Credit Card Payments"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/amountCard_accountBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/accountNameText_accountBalance"
+                android:layout_marginTop="2dp"
+                android:background="#fff"
+                app:cardCornerRadius="6dp"
+                app:strokeColor="#ADACAC"
+                app:strokeWidth="2dp">
+
+                <TextView
+                    android:id="@+id/amountTextView_accountBalance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#fff"
+                    android:fontFamily="@font/open_sans"
+                    android:text="$245.22"
+                    android:textColor="@color/inflow_green"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/lastUpdatedOnText_accountBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/amountCard_accountBalance"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/open_sans"
+                android:text="Last Updated On"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</RelativeLayout>

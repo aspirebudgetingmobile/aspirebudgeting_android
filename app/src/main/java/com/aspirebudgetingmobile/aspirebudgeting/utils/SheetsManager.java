@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.aspirebudgetingmobile.aspirebudgeting.interfaces.AddTransactionCallBack;
+import com.aspirebudgetingmobile.aspirebudgeting.models.AccountBalanceModel;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -45,6 +46,7 @@ public class SheetsManager {
         sessionConfig = objectFactory.getSessionConfig();
     }
 
+    // DIRECT METHODS TO INTERACT WITH SHEETS
     private List<List<Object>> fetchData(Context context, String sheetID, String range) {
 
         userManager.getLastAccount(context);
@@ -224,14 +226,6 @@ public class SheetsManager {
         transactionAccounts = convertToOneDimension(data);
     }
 
-    private List<String> convertToOneDimension(List<List<Object>> data) {
-        List<String> result = new ArrayList<>();
-        for (int i=0; i< data.size(); i++){
-            result.add(String.valueOf(data.get(i)).replace("[", "").replace("]", ""));
-        }
-        return result;
-    }
-
     public void addTransaction(String amount, String memo, String date, String category, String account,
                                int transactionType, int approvalType, AddTransactionCallBack transactionCallBack) {
 
@@ -256,6 +250,23 @@ public class SheetsManager {
 
     }
 
+    public List<AccountBalanceModel> fetchAccountBalance(Context context, String sheetID){
+
+        String range  = "";
+        switch (sessionConfig.getSheetVersion()){
+            case twoEight:
+            case three:
+            case threeOne:
+                range = "Dashboard!B10:C";
+                break;
+            case threeTwo:
+                range = "Dashboard!B8:C";
+                break;
+        }
+        return parseAccountBalance(fetchData(context, sheetID, range), sessionConfig.getSheetVersion());
+    }
+
+    // HELPER METHODS
     private ValueRange createSheetsValueRangeFrom(String amount, String memo, String date, String category,
                                                   String account, int transactionType, int approvalType) {
 
@@ -297,6 +308,45 @@ public class SheetsManager {
         }
         sheetsValueRange.setValues(convertTo2Dimension(valuesToInsert));
         return sheetsValueRange;
+    }
+
+    private List<AccountBalanceModel> parseAccountBalance(List<List<Object>> data, String sheetVersion){
+        List<AccountBalanceModel> result = new ArrayList<>();
+
+        switch (sheetVersion){
+            case twoEight:
+            case three:
+            case threeOne:
+                for (List<Object> innerData : data){
+                    AccountBalanceModel model = new AccountBalanceModel(String.valueOf(innerData.get(0)),
+                            String.valueOf(innerData.get(1)), null);
+                    result.add(model);
+                }
+                break;
+            case threeTwo:
+                AccountBalanceModel model = null;
+                String name = "", amount = "", lastUpdatedOn = "";
+                for (List<Object> innerData : data){
+
+                    if  (innerData.size() > 1){
+                        name = String.valueOf(innerData.get(0));
+                        amount = String.valueOf(innerData.get(1));
+                    } else {
+                        lastUpdatedOn = String.valueOf(innerData.get(0));
+                        model = new AccountBalanceModel(name, amount, lastUpdatedOn);
+                        result.add(model);
+                    }
+                }
+                break;
+        }
+        return result;
+    }
+    private List<String> convertToOneDimension(List<List<Object>> data) {
+        List<String> result = new ArrayList<>();
+        for (int i=0; i< data.size(); i++){
+            result.add(String.valueOf(data.get(i)).replace("[", "").replace("]", ""));
+        }
+        return result;
     }
 
     private List<List<Object>> convertTo2Dimension(List<Object> value){

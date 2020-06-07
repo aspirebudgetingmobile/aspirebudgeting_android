@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -153,7 +154,6 @@ public class Dashboard extends Fragment {
 
             @Override
             protected Void doInBackground(Void... voids) {
-
                 try {
                     list = sheetsManager.fetchCategoriesAndGroups(context, sheetID);
                     isErrorCaused = false;

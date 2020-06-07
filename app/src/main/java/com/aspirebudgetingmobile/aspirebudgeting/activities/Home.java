@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.adapters.ViewPagerAdapter_Home;
+import com.aspirebudgetingmobile.aspirebudgeting.fragments.AccountBalance;
 import com.aspirebudgetingmobile.aspirebudgeting.fragments.Dashboard;
 import com.aspirebudgetingmobile.aspirebudgeting.fragments.AddTransactionFragment;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
@@ -19,6 +20,7 @@ import com.aspirebudgetingmobile.aspirebudgeting.utils.UserManager;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 public class Home extends AppCompatActivity {
@@ -28,6 +30,7 @@ public class Home extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     ImageView settingButton_Dashboard;
+    ExtendedFloatingActionButton addTransactionFAB;
 
     // BOTTOM SHEET
     MaterialCardView settingsBottomSheet;
@@ -42,6 +45,7 @@ public class Home extends AppCompatActivity {
     // Fragments
     Dashboard dashboard = new Dashboard();
     AddTransactionFragment transaction = new AddTransactionFragment();
+    AccountBalance accountBalance = new AccountBalance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +56,7 @@ public class Home extends AppCompatActivity {
         tabLayout = findViewById(R.id.homeTabLayout);
         settingButton_Dashboard = findViewById(R.id.settingButton_Dashboard);
         settingsBottomSheet = findViewById(R.id.settingsBottomSheet);
+        addTransactionFAB = findViewById(R.id.addTransactionsFAB_home);
         versionName = findViewById(R.id.appVersionTextView);
         signOut = findViewById(R.id.signOutButton);
 
@@ -59,10 +64,11 @@ public class Home extends AppCompatActivity {
 
         settingsSheetBehaviour = BottomSheetBehavior.from(settingsBottomSheet);
         settingsSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
+        addTransactionFAB.shrink();
 
         pagerAdapterHome = new ViewPagerAdapter_Home(getSupportFragmentManager(), 1);
         pagerAdapterHome.addFragment(dashboard, "Dashboard");
-        pagerAdapterHome.addFragment(transaction, "Transaction");
+        pagerAdapterHome.addFragment(accountBalance, "Account Balance");
         viewPager.setAdapter(pagerAdapterHome);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -74,8 +80,7 @@ public class Home extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                if (position == 1)
-                    transaction.initValues();
+
             }
 
             @Override
