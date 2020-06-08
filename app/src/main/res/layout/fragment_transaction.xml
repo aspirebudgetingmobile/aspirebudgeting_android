@@ -2,6 +2,7 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parentLayout_addTransactions"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
@@ -14,6 +15,30 @@
         android:background="@color/aspireDarkPrimaryColor"
         android:orientation="vertical"
         tools:context=".fragments.AddTransactionFragment">
+
+        <RelativeLayout
+            android:id="@+id/headerLayout_addTransaction"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/open_sans_bold"
+                android:text="Add Transaction"
+                android:textColor="#fff"
+                android:layout_centerHorizontal="true"
+                android:textSize="25sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/cross_icon_white" />
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/amountEditText_transactions"
@@ -55,8 +80,8 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/grey_background"
             android:drawableStart="@drawable/calender_icon"
-            android:drawableTint="@color/aspireDarkPrimaryColor"
             android:drawablePadding="10dp"
+            android:drawableTint="@color/aspireDarkPrimaryColor"
             android:padding="10dp"
             android:text="Select Date"
             android:textColor="@color/aspireDarkPrimaryColor"
@@ -271,6 +296,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             app:cardCornerRadius="25dp"
             app:cardElevation="0dp"
             app:strokeColor="#5FB2EB"

@@ -2,25 +2,26 @@ package com.aspirebudgetingmobile.aspirebudgeting.fragments;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.fragment.app.Fragment;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.activities.Home;
@@ -28,6 +29,7 @@ import com.aspirebudgetingmobile.aspirebudgeting.interfaces.AddTransactionCallBa
 import com.aspirebudgetingmobile.aspirebudgeting.utils.BasicUtils;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SheetsManager;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.card.MaterialCardView;
 
 import java.text.SimpleDateFormat;
@@ -37,7 +39,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class AddTransactionFragment extends Fragment {
+public class AddTransactionFragment extends BottomSheetDialogFragment {
 
     private EditText amountEditText_transactions, addMemoEditText_transactions;
     private TextView selectDateEditText_transactions, inFlowTextView_transactions,
@@ -45,9 +47,11 @@ public class AddTransactionFragment extends Fragment {
     private AppCompatSpinner categorySpinner_transactions, accountSpinner_transactions;
     private MaterialCardView addCard_transactions;
     private LinearLayout backgroundLayout;
+    private RelativeLayout headerLayout_addTransaction;
 
     private View view;
     private Context context;
+    private Activity activity;
     private ObjectFactory objectFactory = ObjectFactory.getInstance();
     private SheetsManager sheetsManager = objectFactory.getSheetsManager();
     private String selectedCategory = "", selectedAccount = "";
@@ -58,7 +62,8 @@ public class AddTransactionFragment extends Fragment {
     private ProgressDialog progressDialog;
     private boolean result = false;
 
-    public AddTransactionFragment() {
+    public AddTransactionFragment(Activity activity) {
+        this.activity = activity;
     }
 
     @Override
@@ -85,6 +90,7 @@ public class AddTransactionFragment extends Fragment {
         outFlowTextView_transactions = view.findViewById(R.id.outFlowTextView_transactions);
         approvedTextView_transactions = view.findViewById(R.id.approvedTextView_transactions);
         pendingTextView_transactions = view.findViewById(R.id.pendingTextView_transactions);
+        headerLayout_addTransaction = view.findViewById(R.id.headerLayout_addTransaction);
         addCard_transactions = view.findViewById(R.id.addCard_transactions);
         backgroundLayout = view.findViewById(R.id.backgroundLayout);
 
@@ -92,7 +98,7 @@ public class AddTransactionFragment extends Fragment {
         progressDialog.setMessage("Please wait...");
     }
 
-    public void initValues() {
+    private void initValues() {
         List<String> categoryList = new ArrayList<>();
         categoryList.add("Select Category");
         categoryList.addAll(sheetsManager.getTransactionCategories());
@@ -143,7 +149,7 @@ public class AddTransactionFragment extends Fragment {
                         selectedCategory.equalsIgnoreCase("Select Category") || selectedAccount.equalsIgnoreCase("Select Account")) {
                     Toast.makeText(context, "Kindly fill all information", Toast.LENGTH_SHORT).show();
                 } else {
-                    BasicUtils.hideKeyboard(Objects.requireNonNull(getActivity()));
+                    hideKeyboard();
                     progressDialog.show();
                     startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), addMemoEditText_transactions.getText().toString().trim());
                 }
@@ -153,6 +159,7 @@ public class AddTransactionFragment extends Fragment {
         selectDateEditText_transactions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                hideKeyboard();
                 new DatePickerDialog(context, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
@@ -160,8 +167,8 @@ public class AddTransactionFragment extends Fragment {
 
         backgroundLayout.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                BasicUtils.hideKeyboard(Objects.requireNonNull(getActivity()));
+            public void onClick(View view1) {
+                hideKeyboard();
             }
         });
 
@@ -200,6 +207,13 @@ public class AddTransactionFragment extends Fragment {
                 selectedApprovalType = 1;
             }
         });
+
+        headerLayout_addTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -227,14 +241,16 @@ public class AddTransactionFragment extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                if (result){
+                if (result) {
                     progressDialog.dismiss();
                     Toast.makeText(context, "Transactions Uploaded !", Toast.LENGTH_SHORT).show();
-                    ((Home) context).reloadCards();
+                    ((Home) Objects.requireNonNull(getActivity())).reloadCards();
+                    ((Home) Objects.requireNonNull(getActivity())).reloadAccounts();
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(context, "Transactions Upload failed !", Toast.LENGTH_SHORT).show();
                 }
+                hideKeyboard();
             }
         }.execute();
     }
@@ -258,5 +274,14 @@ public class AddTransactionFragment extends Fragment {
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         selectedDate = sdf.format(myCalendar.getTime());
         selectDateEditText_transactions.setText(selectedDate);
+    }
+
+    private void hideKeyboard(){
+        try {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            Objects.requireNonNull(imm).hideSoftInputFromWindow(view.getWindowToken(), 0);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

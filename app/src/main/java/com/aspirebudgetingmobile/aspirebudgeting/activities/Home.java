@@ -1,9 +1,11 @@
 package com.aspirebudgetingmobile.aspirebudgeting.activities;
 
+import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,14 +45,26 @@ public class Home extends AppCompatActivity {
     UserManager userManager;
 
     // Fragments
-    Dashboard dashboard = new Dashboard();
-    AddTransactionFragment transaction = new AddTransactionFragment();
-    AccountBalance accountBalance = new AccountBalance();
+    Dashboard dashboard;
+    AddTransactionFragment transaction;
+    AccountBalance accountBalance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        initView();
+        setupViewPager();
+        getVersionName();
+        onClickListeners();
+    }
+
+    private void initView() {
+
+        dashboard = new Dashboard(Home.this);
+        transaction = new AddTransactionFragment(Home.this);
+        accountBalance = new AccountBalance();
 
         viewPager = findViewById(R.id.viewPager_Home);
         tabLayout = findViewById(R.id.homeTabLayout);
@@ -59,13 +73,13 @@ public class Home extends AppCompatActivity {
         addTransactionFAB = findViewById(R.id.addTransactionsFAB_home);
         versionName = findViewById(R.id.appVersionTextView);
         signOut = findViewById(R.id.signOutButton);
-
         userManager = objectFactory.getUserManager();
 
         settingsSheetBehaviour = BottomSheetBehavior.from(settingsBottomSheet);
         settingsSheetBehaviour.setState(BottomSheetBehavior.STATE_HIDDEN);
-        addTransactionFAB.shrink();
+    }
 
+    private void setupViewPager() {
         pagerAdapterHome = new ViewPagerAdapter_Home(getSupportFragmentManager(), 1);
         pagerAdapterHome.addFragment(dashboard, "Dashboard");
         pagerAdapterHome.addFragment(accountBalance, "Account Balance");
@@ -88,10 +102,6 @@ public class Home extends AppCompatActivity {
 
             }
         });
-
-        getVersionName();
-
-        onClickListeners();
     }
 
     private void getVersionName() {
@@ -123,10 +133,24 @@ public class Home extends AppCompatActivity {
                 userManager.signOutUser(Home.this);
             }
         });
+
+        addTransactionFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                transaction.show(getSupportFragmentManager(), "Transactions");
+            }
+        });
     }
 
     public void reloadCards(){
         dashboard.reloadCards();
     }
 
+    public void reloadAccounts(){
+        accountBalance.fetchAccountBalance();
+    }
+
+    public void dataLoaded(){
+        addTransactionFAB.shrink();
+    }
 }

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
+import com.aspirebudgetingmobile.aspirebudgeting.activities.Home;
 import com.aspirebudgetingmobile.aspirebudgeting.adapters.DashboardCardsAdapter;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
@@ -55,8 +56,10 @@ public class Dashboard extends Fragment {
     private SwipeRefreshLayout swipeRefresh_dashboard;
     private ProgressBar loadingProgress;
     private TextView loadingText;
+    private Home home;
 
-    public Dashboard() {
+    public Dashboard(Home home) {
+        this.home = home;
     }
 
 
@@ -179,6 +182,7 @@ public class Dashboard extends Fragment {
                     loadingLayout.setVisibility(View.GONE);
                     swipeRefresh_dashboard.setRefreshing(false);
                 }
+                home.dataLoaded();
             }
         }.execute();
     }

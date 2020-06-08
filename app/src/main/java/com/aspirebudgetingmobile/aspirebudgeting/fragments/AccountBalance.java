@@ -75,11 +75,16 @@ public class AccountBalance extends Fragment {
     }
 
     private void onClickListeners() {
-
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                fetchAccountBalance();
+            }
+        });
     }
 
     @SuppressLint("StaticFieldLeak")
-    private void fetchAccountBalance() {
+    public void fetchAccountBalance() {
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
