@@ -145,13 +145,16 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 if (selectedApprovalType == 2 || selectedTransactionType == 2 || selectedDate.isEmpty() ||
                         amountEditText_transactions.getText() == null || amountEditText_transactions.getText().toString().isEmpty() ||
-                        addMemoEditText_transactions.getText() == null || addMemoEditText_transactions.getText().toString().isEmpty() ||
                         selectedCategory.equalsIgnoreCase("Select Category") || selectedAccount.equalsIgnoreCase("Select Account")) {
                     Toast.makeText(context, "Kindly fill all information", Toast.LENGTH_SHORT).show();
                 } else {
                     hideKeyboard();
                     progressDialog.show();
-                    startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), addMemoEditText_transactions.getText().toString().trim());
+                    if (addMemoEditText_transactions.getText() == null || addMemoEditText_transactions.getText().toString().isEmpty()){
+                        startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), "");
+                    } else {
+                        startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), addMemoEditText_transactions.getText().toString().trim());
+                    }
                 }
             }
         });
