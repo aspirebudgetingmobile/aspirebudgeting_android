@@ -244,6 +244,8 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
                 if (result) {
                     progressDialog.dismiss();
                     Toast.makeText(context, "Transactions Uploaded !", Toast.LENGTH_SHORT).show();
+                    amountEditText_transactions.setText("");
+                    addMemoEditText_transactions.setText("");
                     ((Home) Objects.requireNonNull(getActivity())).reloadCards();
                     ((Home) Objects.requireNonNull(getActivity())).reloadAccounts();
                 } else {

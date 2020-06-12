@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -65,6 +67,9 @@ dependencies {
 
     // BioMetric
     implementation 'androidx.biometric:biometric:1.0.1'
+
+    // Firebase Crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.1'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'

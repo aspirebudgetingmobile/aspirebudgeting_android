@@ -177,7 +177,6 @@ public class Dashboard extends Fragment {
                     swipeRefresh_dashboard.setRefreshing(false);
                 } else {
                     adapter = new DashboardCardsAdapter(context, list);
-                    adapter.setHasStableIds(true);
                     recyclerView.setAdapter(adapter);
                     loadingLayout.setVisibility(View.GONE);
                     swipeRefresh_dashboard.setRefreshing(false);

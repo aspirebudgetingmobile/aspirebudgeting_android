@@ -12,6 +12,7 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.AppendValuesResponse;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,6 +66,7 @@ public class SheetsManager {
             Log.e("FETCH_DATA", "fetchData: " + values);
 
         } catch (IOException e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
             e.printStackTrace();
         }
 
@@ -78,7 +80,7 @@ public class SheetsManager {
 
         String rangeForCategoryAndGroups = "";
 
-        switch (sessionConfig.getSheetVersion()){
+        switch (sessionConfig.getSheetVersion()) {
             case twoEight:
             case three:
             case threeOne:
@@ -94,13 +96,8 @@ public class SheetsManager {
 
     private List<DashboardCardsModel> parseFetchedData(List<List<Object>> fetchedData) {
 
-        List<Object> fakeBuffer = new ArrayList<>();
-        fakeBuffer.add("FakeBuffer");
-        Objects.requireNonNull(fetchedData).add(fakeBuffer);
-
         List<DashboardCardsModel> list = new ArrayList<>();
         JSONArray parsedData = new JSONArray();
-
 
         try {
             JSONObject innerObject = null;
@@ -112,7 +109,6 @@ public class SheetsManager {
 
             // Running a loop for all the inner List<Object>
             for (int i = 0; i < fetchedData.size(); i++) {
-
                 List<Object> test = fetchedData.get(i);
 
                 // check if the first element of the List is a solid diamond, then it is a group
@@ -151,10 +147,21 @@ public class SheetsManager {
                     budgeted.add(String.valueOf(test.get(9)));
                     spent.add(String.valueOf(test.get(6)));
                     available.add(String.valueOf(test.get(3)));
+
+                    if (i == fetchedData.size() - 1) {
+                        DashboardCardsModel model = new DashboardCardsModel(name,
+                                categoryName,
+                                budgeted,
+                                spent,
+                                available);
+
+                        list.add(model);
+                    }
                 }
             }
 
         } catch (Exception e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
             e.printStackTrace();
         }
 
@@ -233,11 +240,11 @@ public class SheetsManager {
             AppendValuesResponse appendTransaction =
                     service.spreadsheets().values().append(sessionConfig.getSheetId(),
                             appendTransactionRange, createSheetsValueRangeFrom(amount, memo, date, category, account, transactionType, approvalType))
-                    .setValueInputOption("USER_ENTERED")
-                    .execute();
+                            .setValueInputOption("USER_ENTERED")
+                            .execute();
 
-            if (appendTransaction.getUpdates().getUpdatedRange() !=null &&
-                    !appendTransaction.getUpdates().getUpdatedRange().isEmpty()){
+            if (appendTransaction.getUpdates().getUpdatedRange() != null &&
+                    !appendTransaction.getUpdates().getUpdatedRange().isEmpty()) {
                 transactionCallBack.onSuccess();
             } else {
                 transactionCallBack.onError();
@@ -250,10 +257,10 @@ public class SheetsManager {
 
     }
 
-    public List<AccountBalanceModel> fetchAccountBalance(Context context, String sheetID){
+    public List<AccountBalanceModel> fetchAccountBalance(Context context, String sheetID) {
 
-        String range  = "";
-        switch (sessionConfig.getSheetVersion()){
+        String range = "";
+        switch (sessionConfig.getSheetVersion()) {
             case twoEight:
             case three:
             case threeOne:
@@ -290,7 +297,7 @@ public class SheetsManager {
 
         switch (sessionConfig.getSheetVersion()) {
             case twoEight:
-                if (approvalType == 0){
+                if (approvalType == 0) {
                     valuesToInsert.add("\uD83C\uDD97");
                 } else {
                     valuesToInsert.add("\u23FA");
@@ -299,7 +306,7 @@ public class SheetsManager {
             case three:
             case threeOne:
             case threeTwo:
-                if (approvalType == 0){
+                if (approvalType == 0) {
                     valuesToInsert.add("✅");
                 } else {
                     valuesToInsert.add("\uD83C\uDD7F️");
@@ -310,14 +317,14 @@ public class SheetsManager {
         return sheetsValueRange;
     }
 
-    private List<AccountBalanceModel> parseAccountBalance(List<List<Object>> data, String sheetVersion){
+    private List<AccountBalanceModel> parseAccountBalance(List<List<Object>> data, String sheetVersion) {
         List<AccountBalanceModel> result = new ArrayList<>();
 
-        switch (sheetVersion){
+        switch (sheetVersion) {
             case twoEight:
             case three:
             case threeOne:
-                for (List<Object> innerData : data){
+                for (List<Object> innerData : data) {
                     AccountBalanceModel model = new AccountBalanceModel(String.valueOf(innerData.get(0)),
                             String.valueOf(innerData.get(1)), null);
                     result.add(model);
@@ -326,9 +333,9 @@ public class SheetsManager {
             case threeTwo:
                 AccountBalanceModel model = null;
                 String name = "", amount = "", lastUpdatedOn = "";
-                for (List<Object> innerData : data){
+                for (List<Object> innerData : data) {
 
-                    if  (innerData.size() > 1){
+                    if (innerData.size() > 1) {
                         name = String.valueOf(innerData.get(0));
                         amount = String.valueOf(innerData.get(1));
                     } else {
@@ -341,25 +348,26 @@ public class SheetsManager {
         }
         return result;
     }
+
     private List<String> convertToOneDimension(List<List<Object>> data) {
         List<String> result = new ArrayList<>();
-        for (int i=0; i< data.size(); i++){
+        for (int i = 0; i < data.size(); i++) {
             result.add(String.valueOf(data.get(i)).replace("[", "").replace("]", ""));
         }
         return result;
     }
 
-    private List<List<Object>> convertTo2Dimension(List<Object> value){
+    private List<List<Object>> convertTo2Dimension(List<Object> value) {
         List<List<Object>> result = new ArrayList<>();
         result.add(0, value);
         return result;
     }
 
-    public List<String> getTransactionCategories(){
+    public List<String> getTransactionCategories() {
         return transactionCategories;
     }
 
-    public List<String> getTransactionAccounts(){
+    public List<String> getTransactionAccounts() {
         return transactionAccounts;
     }
 }
