@@ -62,8 +62,10 @@ public class Home extends AppCompatActivity {
 
     private void initView() {
 
-        dashboard = new Dashboard(Home.this);
-        transaction = new AddTransactionFragment(Home.this);
+        dashboard = new Dashboard();
+        dashboard.shareData(Home.this);
+        transaction = new AddTransactionFragment();
+        transaction.shareData(Home.this);
         accountBalance = new AccountBalance();
 
         viewPager = findViewById(R.id.viewPager_Home);

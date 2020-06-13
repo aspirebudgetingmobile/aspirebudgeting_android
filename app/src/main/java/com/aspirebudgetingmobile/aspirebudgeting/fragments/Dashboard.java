@@ -58,10 +58,7 @@ public class Dashboard extends Fragment {
     private TextView loadingText;
     private Home home;
 
-    public Dashboard(Home home) {
-        this.home = home;
-    }
-
+    public Dashboard() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -162,7 +159,6 @@ public class Dashboard extends Fragment {
                     isErrorCaused = false;
                 } catch (Exception e) {
                     isErrorCaused = true;
-                    Log.e(TAG, "doInBackground: " + e);
                 }
 
                 return null;
@@ -176,10 +172,17 @@ public class Dashboard extends Fragment {
                     loadingProgress.setVisibility(View.GONE);
                     swipeRefresh_dashboard.setRefreshing(false);
                 } else {
-                    adapter = new DashboardCardsAdapter(context, list);
-                    recyclerView.setAdapter(adapter);
-                    loadingLayout.setVisibility(View.GONE);
-                    swipeRefresh_dashboard.setRefreshing(false);
+                    if (list.size() == 0){
+                        loadingText.setText("There was some problem with the sheet.");
+                        loadingProgress.setVisibility(View.GONE);
+                        swipeRefresh_dashboard.setRefreshing(false);
+                    } else {
+                        adapter = new DashboardCardsAdapter(context, list);
+                        recyclerView.setAdapter(adapter);
+                        loadingLayout.setVisibility(View.GONE);
+                        swipeRefresh_dashboard.setRefreshing(false);
+                    }
+
                 }
                 home.dataLoaded();
             }
@@ -188,6 +191,10 @@ public class Dashboard extends Fragment {
 
     public void reloadCards() {
         getGroupToDisplay();
+    }
+
+    public void shareData(Home home){
+        this.home = home;
     }
 }
 

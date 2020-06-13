@@ -26,7 +26,6 @@ import androidx.appcompat.widget.AppCompatSpinner;
 import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.activities.Home;
 import com.aspirebudgetingmobile.aspirebudgeting.interfaces.AddTransactionCallBack;
-import com.aspirebudgetingmobile.aspirebudgeting.utils.BasicUtils;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SheetsManager;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -62,8 +61,7 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
     private ProgressDialog progressDialog;
     private boolean result = false;
 
-    public AddTransactionFragment(Activity activity) {
-        this.activity = activity;
+    public AddTransactionFragment() {
     }
 
     @Override
@@ -150,7 +148,7 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
                 } else {
                     hideKeyboard();
                     progressDialog.show();
-                    if (addMemoEditText_transactions.getText() == null || addMemoEditText_transactions.getText().toString().isEmpty()){
+                    if (addMemoEditText_transactions.getText() == null || addMemoEditText_transactions.getText().toString().isEmpty()) {
                         startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), "");
                     } else {
                         startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), addMemoEditText_transactions.getText().toString().trim());
@@ -281,12 +279,16 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
         selectDateEditText_transactions.setText(selectedDate);
     }
 
-    private void hideKeyboard(){
+    private void hideKeyboard() {
         try {
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
             Objects.requireNonNull(imm).hideSoftInputFromWindow(view.getWindowToken(), 0);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void shareData(Activity activity) {
+        this.activity = activity;
     }
 }
