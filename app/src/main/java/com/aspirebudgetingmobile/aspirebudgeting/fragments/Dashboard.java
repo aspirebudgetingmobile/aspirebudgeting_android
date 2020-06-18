@@ -69,7 +69,7 @@ public class Dashboard extends Fragment {
         // FETCH AND INITIALIZE THE VIEWS AND CLASSES
         fetchIDs_init();
         // INIT LOADING ANIMATION
-        loadingAnimation();
+        //loadingAnimation();
         // FETCH CATEGORIES AND GROUPS TO DISPLAY
         getGroupToDisplay();
         // ON CLICK LISTENERS

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -153,6 +154,18 @@ public class Home extends AppCompatActivity {
     }
 
     public void dataLoaded(){
-        addTransactionFAB.shrink();
+        new CountDownTimer(1000, 1000){
+
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                addTransactionFAB.shrink();
+            }
+        }.start();
+
     }
 }
