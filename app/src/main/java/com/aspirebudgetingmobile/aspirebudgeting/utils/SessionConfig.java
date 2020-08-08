@@ -3,6 +3,13 @@ package com.aspirebudgetingmobile.aspirebudgeting.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SessionConfig {
 
     private Context context;
@@ -13,6 +20,7 @@ public class SessionConfig {
     private static final String SharedPref_name = "com.aspirebudgetingmobile.aspirebudgeting_name";
     private static final String SharedPref_profile = "com.aspirebudgetingmobile.aspirebudgeting_profile";
     private static final String SharedPref_sheetId = "com.aspirebudgetingmobile.aspirebudgeting_sheetId";
+    private static final String SharedPref_widget_categories = "com.aspirebudgetingmobile.aspirebudgeting_widget_categories";
     private static final String SharedPref_sheetVersion = "com.aspirebudgetingmobile.aspirebudgeting_sheetVersion";
 
     public SessionConfig(Context context) {
@@ -68,6 +76,25 @@ public class SessionConfig {
 
     public String getSheetId() {
         return sharedPreferences.getString(SharedPref_sheetId, "none");
+    }
+
+    public void setWidgetCategoryList(String appWidgetId, List<String> categories){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(categories);
+        editor.putString(SharedPref_widget_categories+appWidgetId, json);
+        editor.apply();
+    }
+    public List<String> getWidgetCategoryList(String appWidgetId){
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString(SharedPref_widget_categories+ appWidgetId, null);
+        Type type = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        return gson.fromJson(json, type);
+    }
+    public void removeWidgetCategoryList(String appWidgetId){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(SharedPref_widget_categories+ appWidgetId);
     }
 
     public void setSheetVersion(String version) {
