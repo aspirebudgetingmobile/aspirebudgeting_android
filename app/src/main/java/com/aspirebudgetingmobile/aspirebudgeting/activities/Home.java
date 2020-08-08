@@ -66,6 +66,15 @@ public class Home extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapterHome);
         tabLayout.setupWithViewPager(viewPager);
 
+        //From widget, go directly to filled transactions tab
+        int page = 0;
+        Bundle extras= getIntent().getExtras();
+        if (extras != null){
+            page = extras.getInt("ARG_PAGE", 0);
+            //TODO: Currently this fails since FETCH_DATA hasn't finished
+            //viewPager.setCurrentItem(page);
+        }
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

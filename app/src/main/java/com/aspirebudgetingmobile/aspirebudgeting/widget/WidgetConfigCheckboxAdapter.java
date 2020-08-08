@@ -1,4 +1,4 @@
-package com.aspirebudgetingmobile.aspirebudgeting.adapters;
+package com.aspirebudgetingmobile.aspirebudgeting.widget;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
-import com.aspirebudgetingmobile.aspirebudgeting.models.WidgetCategoriesModel;
 
 import java.util.List;
 

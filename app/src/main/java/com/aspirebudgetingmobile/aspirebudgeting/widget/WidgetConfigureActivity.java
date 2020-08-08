@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,17 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
-import com.aspirebudgetingmobile.aspirebudgeting.adapters.WidgetConfigCheckboxAdapter;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
-import com.aspirebudgetingmobile.aspirebudgeting.models.WidgetCategoriesModel;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SessionConfig;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SheetsManager;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.UserManager;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 

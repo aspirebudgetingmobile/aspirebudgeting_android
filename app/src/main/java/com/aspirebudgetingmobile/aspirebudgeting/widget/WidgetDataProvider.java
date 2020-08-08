@@ -1,4 +1,4 @@
-package com.aspirebudgetingmobile.aspirebudgeting.adapters;
+package com.aspirebudgetingmobile.aspirebudgeting.widget;
 
 
 import android.appwidget.AppWidgetManager;
@@ -9,9 +9,7 @@ import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
-import com.aspirebudgetingmobile.aspirebudgeting.widget.WidgetConfigureActivity;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
-import com.aspirebudgetingmobile.aspirebudgeting.models.WidgetCategoriesModel;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SessionConfig;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SheetsManager;

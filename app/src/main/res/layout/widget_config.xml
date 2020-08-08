@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/aspireDarkPrimaryColor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
+        android:textColor="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Select the Categories to show on the widget" />
+        android:text="Select the Categories to show on the widget"
+        android:fontFamily="@font/open_sans_bold"/>
 
     <LinearLayout
         android:id="@+id/loadingLayoutWidget"
@@ -24,10 +27,12 @@
             android:layout_height="20dp" />
 
         <TextView
+            android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="Loading, please wait..."
+            android:fontFamily="@font/open_sans"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -36,7 +41,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/add_widget" />
+        android:background="@drawable/blue_background"
+        android:textColor="#fff"
+        android:text="@string/add_widget"
+        android:padding="8dp"
+        android:fontFamily="@font/open_sans"/>
 
 
     <androidx.recyclerview.widget.RecyclerView

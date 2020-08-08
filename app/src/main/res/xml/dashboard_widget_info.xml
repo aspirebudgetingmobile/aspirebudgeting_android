@@ -3,9 +3,9 @@
     android:configure="com.aspirebudgetingmobile.aspirebudgeting.widget.WidgetConfigureActivity"
     android:initialKeyguardLayout="@layout/widget"
     android:initialLayout="@layout/widget"
-    android:minWidth="180dp"
-    android:minHeight="40dp"
-    android:previewImage="@drawable/example_appwidget_preview"
+    android:minWidth="320dp"
+    android:minHeight="110dp"
+    android:minResizeHeight ="40dp"
     android:resizeMode="horizontal|vertical"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="home_screen"></appwidget-provider>
