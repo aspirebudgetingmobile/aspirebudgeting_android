@@ -1,4 +1,4 @@
-package com.aspirebudgetingmobile.aspirebudgeting;
+package com.aspirebudgetingmobile.aspirebudgeting.widget;
 
 
 import android.content.Intent;

@@ -1,16 +1,14 @@
-package com.aspirebudgetingmobile.aspirebudgeting;
+package com.aspirebudgetingmobile.aspirebudgeting.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
-import android.widget.ListView;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
-import java.util.List;
+import com.aspirebudgetingmobile.aspirebudgeting.R;
 
 /**
  * Implementation of App Widget functionality.
@@ -24,7 +22,6 @@ public class Widget extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
 
-        //Get text directly from google sheet - update button - config page to pull titles
 
         Intent intent = new Intent(context, WidgetService.class);
         //passing app widget id to that RemoteViews Service
@@ -54,7 +51,7 @@ public class Widget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
         for (int appWidgetId : appWidgetIds) {
-            WidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
+            WidgetConfigureActivity.deletePref(context, appWidgetId);
         }
     }
 

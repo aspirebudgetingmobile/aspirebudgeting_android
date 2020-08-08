@@ -1,18 +1,15 @@
 package com.aspirebudgetingmobile.aspirebudgeting.adapters;
 
 
-import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
-import com.aspirebudgetingmobile.aspirebudgeting.WidgetConfigureActivity;
+import com.aspirebudgetingmobile.aspirebudgeting.widget.WidgetConfigureActivity;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
 import com.aspirebudgetingmobile.aspirebudgeting.models.WidgetCategoriesModel;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;

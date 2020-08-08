@@ -1,4 +1,4 @@
-package com.aspirebudgetingmobile.aspirebudgeting;
+package com.aspirebudgetingmobile.aspirebudgeting.widget;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,11 +10,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.aspirebudgetingmobile.aspirebudgeting.R;
 import com.aspirebudgetingmobile.aspirebudgeting.adapters.WidgetConfigCheckboxAdapter;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
 import com.aspirebudgetingmobile.aspirebudgeting.models.WidgetCategoriesModel;
@@ -27,9 +27,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 /**
@@ -39,9 +37,9 @@ public class WidgetConfigureActivity extends Activity {
 
     private static final String PREFS_NAME = "com.aspirebudgetingmobile.aspirebudgeting.DashboardWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
+    private static SessionConfig sessionConfig;
     private ObjectFactory objectFactory = ObjectFactory.getInstance();
     private UserManager userManager;
-    private SessionConfig sessionConfig;
     private boolean isValidSheet;
     private View loadingLayout;
 
@@ -84,27 +82,16 @@ public class WidgetConfigureActivity extends Activity {
         super();
     }
 
-    static void saveCategoryList(Context context, int appWidgetId, List<String> categories) {
-        Gson gson = new Gson();
-        String json = gson.toJson(categories);
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.putString(PREF_PREFIX_KEY + appWidgetId + "_categories", json);
-        prefs.apply();
+    void saveCategoryList(Context context, int appWidgetId, List<String> categories) {
+        sessionConfig.setWidgetCategoryList(Integer.toString(appWidgetId),categories);
     }
 
     public static List<String> loadCategoryList(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        Gson gson = new Gson();
-        String json = prefs.getString(PREF_PREFIX_KEY + appWidgetId + "_categories", null);
-        Type type = new TypeToken<ArrayList<String>>() {
-        }.getType();
-        return gson.fromJson(json, type);
+        return sessionConfig.getWidgetCategoryList(Integer.toString(appWidgetId));
     }
 
-    static void deleteTitlePref(Context context, int appWidgetId) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.remove(PREF_PREFIX_KEY + appWidgetId);
-        prefs.apply();
+    public static void deletePref(Context context, int appWidgetId) {
+        sessionConfig.removeWidgetCategoryList(Integer.toString(appWidgetId));
     }
 
     @Override
