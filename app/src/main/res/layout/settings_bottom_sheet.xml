@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="15dp"
+    android:background="#fff"
+    android:id="@+id/settingsBottomSheet"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="200dp"
+    android:layout_height="wrap_content"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingBottom="20dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textAlignment="center"
+            android:fontFamily="@font/open_sans"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/appVersionTextView"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign out"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textColor="#E57373"
+            android:id="@+id/signOutButton"
+            app:backgroundTint="#fff"
+            app:strokeWidth="1dp"
+            app:strokeColor="#E57373"
+            android:layout_below="@id/appVersionTextView"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"
+            app:elevation="0dp"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

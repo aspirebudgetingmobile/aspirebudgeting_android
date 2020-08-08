@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent">
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swipeRefresh_dashboard">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/aspireDarkPrimaryColor"
-        tools:context=".fragments.Dashboard">
+        android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/dashboardCardsRecyclerView" />
+            android:layout_height="match_parent"
+            android:background="@color/aspireDarkPrimaryColor"
+            tools:context=".fragments.Dashboard">
 
-        <LinearLayout
-            android:id="@+id/loadingLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/dashboardCardsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-            <ProgressBar
-                android:indeterminateTint="#fff"
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
-
-            <TextView
-                android:layout_marginStart="10dp"
-                android:textSize="16sp"
+            <LinearLayout
+                android:id="@+id/loadingLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loading, please wait..."
-                android:textColor="#fff" />
-        </LinearLayout>
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-    </RelativeLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <ProgressBar
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:indeterminateTint="#fff" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="Loading, please wait..."
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/aspireLogoDashboard"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/aspire_logo"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

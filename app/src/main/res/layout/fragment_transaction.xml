@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.Transaction"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fillViewport="true"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    tools:context=".fragments.AddTransactionFragment">
 
     <LinearLayout
+        android:id="@+id/backgroundLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/aspireDarkPrimaryColor"
         android:orientation="vertical"
-        tools:context=".fragments.Transaction">
+        tools:context=".fragments.AddTransactionFragment">
 
         <EditText
             android:id="@+id/amountEditText_transactions"
@@ -20,13 +21,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:inputType="number"
             android:layout_marginEnd="20dp"
             android:background="@drawable/grey_background"
             android:drawableStart="@drawable/dollar_icon"
             android:drawablePadding="10dp"
-            android:gravity="center"
             android:hint="Enter Amount"
+            android:inputType="numberDecimal"
             android:padding="10dp"
             android:textColorHint="#353746" />
 
@@ -34,75 +34,99 @@
             android:id="@+id/addMemoEditText_transactions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/grey_background"
-            android:drawableStart="@drawable/wallet_icon"
+            android:drawableStart="@drawable/memo_icon"
             android:drawablePadding="10dp"
             android:drawableTint="@color/aspireDarkPrimaryColor"
-            android:gravity="center"
             android:hint="Add Memo"
+            android:inputType="text"
             android:padding="10dp"
             android:textColorHint="@color/aspireDarkPrimaryColor" />
 
-        <EditText
+        <TextView
             android:id="@+id/selectDateEditText_transactions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:inputType="number"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/grey_background"
-            android:drawableStart="@drawable/dollar_icon"
-            android:drawablePadding="10dp"
-            android:gravity="center"
-            android:hint="Select Date"
-            android:padding="10dp"
-            android:textColorHint="#353746" />
-
-        <EditText
-            android:id="@+id/selectCategoryEditText_transactions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:inputType="number"
-            android:background="@drawable/grey_background"
-            android:drawableStart="@drawable/wallet_icon"
-            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/calender_icon"
             android:drawableTint="@color/aspireDarkPrimaryColor"
-            android:gravity="center"
-            android:hint="Select Category"
+            android:drawablePadding="10dp"
             android:padding="10dp"
-            android:textColorHint="#353746" />
+            android:text="Select Date"
+            android:textColor="@color/aspireDarkPrimaryColor"
+            android:textSize="17sp" />
 
-        <EditText
-            android:id="@+id/selectAmountEditText_transactions"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/grey_background"
-            android:drawableStart="@drawable/dollar_icon"
-            android:drawablePadding="10dp"
-            android:inputType="number"
-            android:gravity="center"
-            android:hint="Select Amount"
-            android:padding="10dp"
-            android:textColorHint="#353746" />
+            app:cardCornerRadius="6dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/grey_background"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/categoryIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/category_icon"
+                    android:tint="@color/aspireDarkPrimaryColor" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/categorySpinner_transactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/categoryIcon"
+                    android:background="@android:color/transparent"
+                    android:spinnerMode="dialog" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:text="Actions not added yet."
-            android:textColor="#fff" />
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/grey_background"
+            app:cardCornerRadius="6dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/grey_background"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/accountIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/wallet_icon"
+                    android:tint="@color/aspireDarkPrimaryColor" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/accountSpinner_transactions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/accountIcon"
+                    android:background="@android:color/transparent"
+                    android:spinnerMode="dialog" />
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,57 +137,61 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/inFlowCard_transactions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
-                    app:strokeWidth="3dp"
-                    app:strokeColor="#32AE7B">
+                    app:strokeColor="@color/inflow_green"
+                    app:strokeWidth="3dp">
 
                     <TextView
+                        android:id="@+id/inFlowTextView_transactions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="InFlow"
                         android:background="@color/aspireDarkPrimaryColor"
-                        android:textColor="#fff"
-                        android:textSize="20sp"
                         android:paddingStart="30dp"
-                        android:paddingEnd="30sp"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp" />
+                        android:paddingEnd="30sp"
+                        android:paddingBottom="10dp"
+                        android:text="InFlow"
+                        android:textColor="#fff"
+                        android:textSize="20sp" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/outFlowCard_transactions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
-                    app:strokeWidth="3dp"
-                    app:strokeColor="#B22557">
+                    app:strokeColor="@color/outflow_red"
+                    app:strokeWidth="3dp">
 
                     <TextView
+                        android:id="@+id/outFlowTextView_transactions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="OutFlow"
                         android:background="@color/aspireDarkPrimaryColor"
-                        android:textColor="#fff"
-                        android:textSize="20sp"
                         android:paddingStart="30dp"
-                        android:paddingEnd="30sp"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp" />
+                        android:paddingEnd="30sp"
+                        android:paddingBottom="10dp"
+                        android:text="OutFlow"
+                        android:textColor="#fff"
+                        android:textSize="20sp" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </LinearLayout>
@@ -177,83 +205,89 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/approvedCard_transactions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
-                    app:strokeWidth="3dp"
-                    app:strokeColor="#32AE7B">
+                    app:strokeColor="@color/inflow_green"
+                    app:strokeWidth="3dp">
 
                     <TextView
+                        android:id="@+id/approvedTextView_transactions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Approved"
                         android:background="@color/aspireDarkPrimaryColor"
-                        android:textColor="#fff"
-                        android:textSize="20sp"
                         android:paddingStart="30dp"
-                        android:paddingEnd="30sp"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp" />
+                        android:paddingEnd="30sp"
+                        android:paddingBottom="10dp"
+                        android:text="Approved"
+                        android:textColor="#fff"
+                        android:textSize="20sp" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/pendingCard_transactions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="8dp"
-                    app:strokeWidth="3dp"
-                    app:strokeColor="#B22557">
+                    app:strokeColor="@color/outflow_red"
+                    app:strokeWidth="3dp">
 
                     <TextView
+                        android:id="@+id/pendingTextView_transactions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Pending"
                         android:background="@color/aspireDarkPrimaryColor"
-                        android:textColor="#fff"
-                        android:textSize="20sp"
                         android:paddingStart="30dp"
-                        android:paddingEnd="30sp"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp" />
+                        android:paddingEnd="30sp"
+                        android:paddingBottom="10dp"
+                        android:text="Pending"
+                        android:textColor="#fff"
+                        android:textSize="20sp" />
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/addCard_transactions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="25dp"
             android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:layout_marginTop="30dp"
-            app:strokeWidth="3dp"
-            app:strokeColor="#5FB2EB">
+            android:layout_marginEnd="20dp"
+            app:cardCornerRadius="25dp"
+            app:cardElevation="0dp"
+            app:strokeColor="#5FB2EB"
+            app:strokeWidth="3dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/aspireDarkPrimaryColor"
+                android:paddingStart="30dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="30sp"
+                android:paddingBottom="10dp"
                 android:text="Add"
                 android:textAlignment="center"
-                android:background="@color/aspireDarkPrimaryColor"
                 android:textColor="#fff"
-                android:textSize="20sp"
-                android:paddingStart="30dp"
-                android:paddingEnd="30sp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp" />
+                android:textSize="20sp" />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>

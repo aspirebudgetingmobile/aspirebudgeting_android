@@ -119,16 +119,16 @@ public class DashboardCardsAdapter extends RecyclerView.Adapter<DashboardCardsAd
     private String getCalculatedValue(List<String> amountList) {
         double value = 0.00;
         for (int i = 0; i < amountList.size(); i++) {
-            Log.e("PARSE_NUMBER", "getCalculatedValue: " + amountList.get(i));
+            //Log.e("PARSE_NUMBER", "getCalculatedValue: " + amountList.get(i));
             try {
 
                 value += numberFormat.parse(amountList.get(i)).doubleValue();
             } catch (Exception e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 try {
                     value += NumberFormat.getCurrencyInstance(Locale.US).parse(amountList.get(i)).doubleValue();
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    //ex.printStackTrace();
                 }
             }
 
