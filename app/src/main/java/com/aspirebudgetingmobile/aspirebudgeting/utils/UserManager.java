@@ -41,7 +41,6 @@ public class UserManager {
     private GoogleAccountCredential credential;
     private Drive driveService;
     private List<SheetsListModel> sheetList = new ArrayList<>();
-    private static AsyncTask<Void, Void, String> listTask;
 
     private static final int GOOGLE_SIGN_IN = 10;
     private static final String TAG = "USER_MANAGER";
