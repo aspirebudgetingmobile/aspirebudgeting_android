@@ -28,7 +28,8 @@ public class ObjectFactory {
     }
 
     public void initContext(Context context){
-        this.context = context.getApplicationContext();
+        //this.context = context.getApplicationContext();
+        this.context = App.getContext();
     }
 
     public UserManager getUserManager() {

@@ -1,54 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipeRefresh_dashboard"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/swipeRefresh_dashboard">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/aspireDarkPrimaryColor"
-            tools:context=".fragments.Dashboard">
+            android:fillViewport="true">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/dashboardCardsRecyclerView"
+            <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:background="@color/aspireDarkPrimaryColor"
+                tools:context=".fragments.Dashboard">
 
-            <LinearLayout
-                android:id="@+id/loadingLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                <View
+                    android:id="@+id/blankSpace"
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:background="@color/colorPrimary" />
 
-                <ProgressBar
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:indeterminateTint="#fff" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/dashboardCardsRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blankSpace" />
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/loadingLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="Loading, please wait..."
-                    android:textColor="#fff"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/aspireLogoDashboard"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:src="@mipmap/aspire_logo"
-                android:visibility="gone" />
-        </RelativeLayout>
+                    <ProgressBar
+                        android:id="@+id/loadingProgress"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:indeterminateTint="#fff" />
+
+                    <TextView
+                        android:id="@+id/loadingText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Loading, please wait..."
+                        android:textAlignment="center"
+                        android:textColor="#fff"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/aspireLogoDashboard"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/aspire_logo"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

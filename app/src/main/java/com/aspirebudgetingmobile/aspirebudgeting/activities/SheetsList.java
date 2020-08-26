@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +34,7 @@ public class SheetsList extends AppCompatActivity {
     RecyclerView sheetsListRecyclerView_LinkSheets;
     List<SheetsListModel> list = new ArrayList<>();
     SheetsListAdapter adapter;
+    TextView noSheetsText;
 
     ProgressDialog progressDialog;
 
@@ -41,6 +44,7 @@ public class SheetsList extends AppCompatActivity {
         setContentView(R.layout.activity_sheets_list);
 
         // FETCHING ID AND SETTING UP RECYCLER VIEW
+        noSheetsText = findViewById(R.id.noSheetsText);
         sheetsListRecyclerView_LinkSheets = findViewById(R.id.sheetsListRecyclerView_LinkSheets);
         sheetsListRecyclerView_LinkSheets.setLayoutManager(new LinearLayoutManager(SheetsList.this, RecyclerView.VERTICAL, false));
 
@@ -80,15 +84,19 @@ public class SheetsList extends AppCompatActivity {
                     list.clear();
                 }
                 list = userManager.getFiles();
-                Log.e(TAG, "onCreate: " + list);
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                // TASK TO DO AFTER GETTING THE LIST
-                showList();
+                if (list.size() > 0) {
+                    // TASK TO DO AFTER GETTING THE LIST
+                    showList();
+                } else {
+                    noSheetsText.setVisibility(View.VISIBLE);
+                }
+
 
                 // DISMISS PROGRESS DIALOG
                 if(progressDialog.isShowing())

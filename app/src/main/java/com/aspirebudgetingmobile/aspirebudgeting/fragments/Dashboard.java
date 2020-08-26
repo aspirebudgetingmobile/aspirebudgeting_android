@@ -4,7 +4,6 @@ package com.aspirebudgetingmobile.aspirebudgeting.fragments;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,19 +25,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.aspirebudgetingmobile.aspirebudgeting.R;
+import com.aspirebudgetingmobile.aspirebudgeting.activities.Home;
 import com.aspirebudgetingmobile.aspirebudgeting.adapters.DashboardCardsAdapter;
 import com.aspirebudgetingmobile.aspirebudgeting.models.DashboardCardsModel;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.ObjectFactory;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SessionConfig;
 import com.aspirebudgetingmobile.aspirebudgeting.utils.SheetsManager;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Dashboard extends Fragment {
 
@@ -47,6 +45,7 @@ public class Dashboard extends Fragment {
     private ObjectFactory objectFactory = ObjectFactory.getInstance();
     private SessionConfig sessionConfig;
     private String sheetID = "";
+    private boolean isErrorCaused = false;
 
     private List<DashboardCardsModel> list = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -55,9 +54,11 @@ public class Dashboard extends Fragment {
     private LinearLayout loadingLayout;
     private ImageView aspireLogoDashboard;
     private SwipeRefreshLayout swipeRefresh_dashboard;
+    private ProgressBar loadingProgress;
+    private TextView loadingText;
+    private Home home;
 
     public Dashboard() {}
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +69,7 @@ public class Dashboard extends Fragment {
         // FETCH AND INITIALIZE THE VIEWS AND CLASSES
         fetchIDs_init();
         // INIT LOADING ANIMATION
-        loadingAnimation();
+        //loadingAnimation();
         // FETCH CATEGORIES AND GROUPS TO DISPLAY
         getGroupToDisplay();
         // ON CLICK LISTENERS
@@ -100,6 +101,8 @@ public class Dashboard extends Fragment {
 
         // FETCH ID OF VIEWS IN LAYOUT
         loadingLayout = view.findViewById(R.id.loadingLayout);
+        loadingProgress = view.findViewById(R.id.loadingProgress);
+        loadingText = view.findViewById(R.id.loadingText);
 
         recyclerView = view.findViewById(R.id.dashboardCardsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, RecyclerView.VERTICAL, false));
@@ -121,7 +124,7 @@ public class Dashboard extends Fragment {
             public void onAnimationUpdate(ValueAnimator animation) {
 
                 // DEVELOPING FADE IN FADE OUT ANIMATION
-                switch ((Integer) animation.getAnimatedValue()){
+                switch ((Integer) animation.getAnimatedValue()) {
                     case 0:
                         aspireLogoDashboard.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.dollar_white_icon));
                         break;
@@ -151,25 +154,47 @@ public class Dashboard extends Fragment {
 
             @Override
             protected Void doInBackground(Void... voids) {
+                try {
+                    list = sheetsManager.fetchCategoriesAndGroups(context, sheetID);
+                    isErrorCaused = false;
+                } catch (Exception e) {
+                    isErrorCaused = true;
+                }
 
-                list = sheetsManager.fetchCategoriesAndGroups(context, sheetID);
                 return null;
             }
 
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                if (isErrorCaused){
+                    loadingText.setText("There was some problem with permission, please logout and try again.");
+                    loadingProgress.setVisibility(View.GONE);
+                    swipeRefresh_dashboard.setRefreshing(false);
+                } else {
+                    if (list.size() == 0){
+                        loadingText.setText("There was some problem with the sheet.");
+                        loadingProgress.setVisibility(View.GONE);
+                        swipeRefresh_dashboard.setRefreshing(false);
+                    } else {
+                        adapter = new DashboardCardsAdapter(context, list);
+                        recyclerView.setAdapter(adapter);
+                        loadingLayout.setVisibility(View.GONE);
+                        swipeRefresh_dashboard.setRefreshing(false);
+                    }
 
-                adapter = new DashboardCardsAdapter(context, list);
-                recyclerView.setAdapter(adapter);
-                loadingLayout.setVisibility(View.GONE);
-                swipeRefresh_dashboard.setRefreshing(false);
+                }
+                home.dataLoaded();
             }
         }.execute();
     }
 
-    public void reloadCards(){
+    public void reloadCards() {
         getGroupToDisplay();
+    }
+
+    public void shareData(Home home){
+        this.home = home;
     }
 }
 

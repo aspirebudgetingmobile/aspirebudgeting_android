@@ -13,4 +13,8 @@
     <color name="dashboardCardColor">#424453</color>
     <color name="inflow_green">#32AE7B</color>
     <color name="outflow_red">#B22557</color>
+
+    <!--Account Balance-->
+    <color name="positiveAmountGreen">#32AE7B</color>
+    <color name="negativeAmountRed">#C86A69</color>
 </resources>

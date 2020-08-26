@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "",
+    "firebase_url": "",
+    "project_id": "",
+    "storage_bucket": ""
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236547897854:android:54f12s59s7g454u987ee4s4w",
+        "android_client_info": {
+          "package_name": "com.aspirebudgetingmobile.aspirebudgeting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": ""
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "",
+              "client_type": 3
+            },
+            {
+              "client_id": "",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": ""
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

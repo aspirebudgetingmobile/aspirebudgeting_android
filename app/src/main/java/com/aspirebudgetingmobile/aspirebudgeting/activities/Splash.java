@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
@@ -85,7 +86,20 @@ public class Splash extends AppCompatActivity {
                             checkUserTypeAndIntent(1000);
                         } else if (Objects.requireNonNull(errorCode) == 10) {
                             // Authentication cancelled
-                            finish();
+                            Toast.makeText(Splash.this, "Please authenticate to continue.", Toast.LENGTH_SHORT).show();
+                            new CountDownTimer(1000, 1000){
+
+                                @Override
+                                public void onTick(long l) {
+
+                                }
+
+                                @Override
+                                public void onFinish() {
+                                    finish();
+                                }
+                            }.start();
+
                         }
                         break;
                 }

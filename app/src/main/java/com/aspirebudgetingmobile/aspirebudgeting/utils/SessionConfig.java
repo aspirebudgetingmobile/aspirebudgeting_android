@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 public class SessionConfig {
 
-    private Context context;
+    //private Context context;
     private SharedPreferences sharedPreferences;
     private static final String initSharedPref = "com.aspirebudgetingmobile.aspirebudgeting_init";
     private static final String SharedPref_loginStatus = "com.aspirebudgetingmobile.aspirebudgeting_loginStatus";
@@ -16,8 +16,8 @@ public class SessionConfig {
     private static final String SharedPref_sheetVersion = "com.aspirebudgetingmobile.aspirebudgeting_sheetVersion";
 
     public SessionConfig(Context context) {
-        this.context = context;
-        sharedPreferences = context.getSharedPreferences(initSharedPref, Context.MODE_PRIVATE);
+        //this.context = context;
+        sharedPreferences = App.getContext().getSharedPreferences(initSharedPref, Context.MODE_PRIVATE);
     }
 
     public void setLoginStatus(boolean status) {
