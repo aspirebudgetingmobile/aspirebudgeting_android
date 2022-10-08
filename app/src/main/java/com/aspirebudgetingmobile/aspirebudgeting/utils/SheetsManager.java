@@ -253,8 +253,6 @@ public class SheetsManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     public List<AccountBalanceModel> fetchAccountBalance(Context context, String sheetID) {
