@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "721463861191",
-    "project_id": "aspire-8ecf3",
-    "storage_bucket": "aspire-8ecf3.appspot.com"
+    "project_number": "",
+    "firebase_url": "",
+    "project_id": "",
+    "storage_bucket": ""
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:721463861191:android:ed7478775ba04e05c1c3e2",
+        "mobilesdk_app_id": "1:236547897854:android:54f12s59s7g454u987ee4s4w",
         "android_client_info": {
           "package_name": "com.aspirebudgetingmobile.aspirebudgeting"
         }
       },
       "oauth_client": [
         {
-          "client_id": "721463861191-1o69au11aad2bl6tc8mv64ls1pgce67a.apps.googleusercontent.com",
+          "client_id": "",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBWjAqtrS_zgAEwqku-fbzKNasUhW1-XzY"
+          "current_key": ""
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "721463861191-1o69au11aad2bl6tc8mv64ls1pgce67a.apps.googleusercontent.com",
+              "client_id": "",
               "client_type": 3
+            },
+            {
+              "client_id": "",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": ""
+              }
             }
           ]
         }
