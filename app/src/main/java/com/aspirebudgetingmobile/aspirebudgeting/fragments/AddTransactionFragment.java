@@ -40,7 +40,7 @@ import java.util.Objects;
 
 public class AddTransactionFragment extends BottomSheetDialogFragment {
 
-    private EditText amountEditText_transactions, addMemoEditText_transactions;
+    private EditText amountEditText_transactions, addMemoEditText_transactions, payeeEditText_transactions;
     private TextView selectDateEditText_transactions, inFlowTextView_transactions,
             outFlowTextView_transactions, approvedTextView_transactions, pendingTextView_transactions;
     private AppCompatSpinner categorySpinner_transactions, accountSpinner_transactions;
@@ -81,6 +81,7 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
     private void fetchIDs() {
         amountEditText_transactions = view.findViewById(R.id.amountEditText_transactions);
         addMemoEditText_transactions = view.findViewById(R.id.addMemoEditText_transactions);
+        payeeEditText_transactions = view.findViewById(R.id.payeeEditText_transactions);
         selectDateEditText_transactions = view.findViewById(R.id.selectDateEditText_transactions);
         categorySpinner_transactions = view.findViewById(R.id.categorySpinner_transactions);
         accountSpinner_transactions = view.findViewById(R.id.accountSpinner_transactions);
@@ -149,9 +150,13 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
                     hideKeyboard();
                     progressDialog.show();
                     if (addMemoEditText_transactions.getText() == null || addMemoEditText_transactions.getText().toString().isEmpty()) {
-                        startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), "");
+                        startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), "", payeeEditText_transactions.getText().toString().trim());
                     } else {
-                        startAppendingTransaction(amountEditText_transactions.getText().toString().trim(), addMemoEditText_transactions.getText().toString().trim());
+                        startAppendingTransaction(
+                                amountEditText_transactions.getText().toString().trim(),
+                                addMemoEditText_transactions.getText().toString().trim(),
+                                payeeEditText_transactions.getText().toString().trim()
+                        );
                     }
                 }
             }
@@ -218,12 +223,12 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private void startAppendingTransaction(final String amount, final String memo) {
+    private void startAppendingTransaction(final String amount, final String memo, final String payee) {
         new AsyncTask<Void, Void, Void>() {
 
             @Override
             protected Void doInBackground(Void... voids) {
-                sheetsManager.addTransaction(amount, memo, selectedDate,
+                sheetsManager.addTransaction(amount, memo, payee, selectedDate,
                         selectedCategory, selectedAccount, selectedTransactionType, selectedApprovalType
                         , new AddTransactionCallBack() {
                             @Override
@@ -246,6 +251,7 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
                     progressDialog.dismiss();
                     Toast.makeText(context, "Transactions Uploaded !", Toast.LENGTH_SHORT).show();
                     amountEditText_transactions.setText("");
+                    payeeEditText_transactions.setText("");
                     addMemoEditText_transactions.setText("");
                     ((Home) Objects.requireNonNull(getActivity())).reloadCards();
                     ((Home) Objects.requireNonNull(getActivity())).reloadAccounts();

@@ -5,7 +5,22 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/drawable/memo_icon.xml" value="0.2985" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/drawable/pound_white_icon.xml" value="0.2985" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/drawable/right_arrow.xml" value="0.2985" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/drawable/wallet_icon.xml" value="0.2985" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/drawable/yen_white_icon.xml" value="0.2985" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/layout/activity_home.xml" value="0.35260416666666666" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/layout/fragment_dashboard.xml" value="0.35260416666666666" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/layout/fragment_transaction.xml" value="0.35260416666666666" />
+        <entry key="..\:/Repos/aspirebudgeting_android/app/src/main/res/layout/inflated_dashboard_card_layout.xml" value="0.35260416666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -36,7 +36,7 @@ public class SheetsManager {
     private static final String three = "3.0";
     private static final String threeOne = "3.1.0";
     private static final String threeTwo = "3.2.0";
-    private static final String appendTransactionRange = "Transactions!B:H";
+    private static final String appendTransactionRange = "Current Transactions!B:H";
 
     // Util Data
     private List<String> transactionCategories = new ArrayList<>();
@@ -233,13 +233,13 @@ public class SheetsManager {
         transactionAccounts = convertToOneDimension(data);
     }
 
-    public void addTransaction(String amount, String memo, String date, String category, String account,
+    public void addTransaction(String amount, String memo, String payee, String date, String category, String account,
                                int transactionType, int approvalType, AddTransactionCallBack transactionCallBack) {
 
         try {
             AppendValuesResponse appendTransaction =
                     service.spreadsheets().values().append(sessionConfig.getSheetId(),
-                            appendTransactionRange, createSheetsValueRangeFrom(amount, memo, date, category, account, transactionType, approvalType))
+                            appendTransactionRange, createSheetsValueRangeFrom(amount, payee, memo, date, category, account, transactionType, approvalType))
                             .setValueInputOption("USER_ENTERED")
                             .execute();
 
@@ -274,7 +274,7 @@ public class SheetsManager {
     }
 
     // HELPER METHODS
-    private ValueRange createSheetsValueRangeFrom(String amount, String memo, String date, String category,
+    private ValueRange createSheetsValueRangeFrom(String amount, String payee, String memo, String date, String category,
                                                   String account, int transactionType, int approvalType) {
 
         ValueRange sheetsValueRange = new ValueRange();
@@ -291,9 +291,10 @@ public class SheetsManager {
             valuesToInsert.add("");
         }
 
+        valuesToInsert.add(payee);
         valuesToInsert.add(category);
         valuesToInsert.add(account);
-        valuesToInsert.add(String.format("%s - Added from Aspire Android app", memo));
+        valuesToInsert.add(String.format("%s", memo));
 
         switch (sessionConfig.getSheetVersion()) {
             case twoEight:
