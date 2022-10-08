@@ -56,6 +56,21 @@
             android:textColorHint="#353746" />
 
         <EditText
+            android:id="@+id/payeeEditText_transactions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/grey_background"
+            android:drawableStart="@drawable/memo_icon"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/aspireDarkPrimaryColor"
+            android:hint="Payee"
+            android:inputType="text"
+            android:padding="10dp"
+            android:textColorHint="@color/aspireDarkPrimaryColor"/>
+        <EditText
             android:id="@+id/addMemoEditText_transactions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,7 +122,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/category_icon"
-                    android:tint="@color/aspireDarkPrimaryColor" />
+                    android:tint="@color/aspireDarkPrimaryColor"/>
 
                 <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/categorySpinner_transactions"
@@ -313,7 +328,7 @@
                 android:text="Add"
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="20sp" />
+                android:textSize="20sp"/>
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
